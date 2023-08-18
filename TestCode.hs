@@ -1,5 +1,9 @@
 module TestCode where 
     
 import Point
+import City
+import Link  
+import Quality
 
-newP x y = Poi x y 
+
+Atlanta = Cit "Atlanta" 1 2
