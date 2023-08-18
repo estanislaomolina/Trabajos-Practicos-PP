@@ -30,3 +30,7 @@ linkCon1 :: Bool
 linkCon1 = linksL c1 c2 link1
 linkCon2 = linksL c1 c3 link1
 linkCon3 = linksL c2 c1 link1
+
+capac = capacityL link1
+
+dela = delayL link1
