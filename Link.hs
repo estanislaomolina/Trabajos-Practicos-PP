@@ -12,7 +12,7 @@ newL cit1 cit2 qua  = Lin cit1 cit2 qua
 
 connectsL :: City -> Link -> Bool   -- indica si esta ciudad es parte de este link
 
-connectsL ciudad (Lin cit1 cit2 _) | ciudad == cit1 _ _ = True
+connectsL ciudad (Lin cit1 cit2 _) | ciudad == cit1 = True
                                    | ciudad == cit2 = True
                                    | otherwise = False
 
