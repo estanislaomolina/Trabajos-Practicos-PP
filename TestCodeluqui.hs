@@ -6,6 +6,7 @@ import City
 import Quality
 import Link
 import Tunel
+import Region
 
 p1 = newP 10 10
 p2 = newP 8 10
@@ -28,4 +29,5 @@ link2 = newL nagasaki tokyo bad
 
 tunel1 = newT [link1,link2]
 
+Asia = newR nyc good tunel1
 
