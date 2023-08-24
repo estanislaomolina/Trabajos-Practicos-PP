@@ -23,23 +23,23 @@ cityR (Reg citylist _ _) citytarget = foldr (\each fold -> each == citytarget ||
 multicheckcityR :: Region -> [ City ] -> Bool -- cheque si todas las ciudades de la lista pertenecen a la region
 multicheckcityR (Reg regcitylist _ _) citylist = foldr(\each fold -> checkcityR (Reg regcitylist _ _) each || fold ) False citylist
 
-checklinkR :: Region -> [ City ] -> Bool
+checklinkR :: [ Link ] -> City -> City -> Bool
+checklinkR linklist city1 city2 = foldr (\each fold -> city1 city2 each || fold ) False linklist
+
+multichecklinkR :: [ Link ] -> [ City ] -> Bool
+multichecklinkR linklist citylist = foldr (\(each, next) fold -> checklinkR linklist each next || fold ) False (zip citylist (tail citylist))
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg regcitylist reglinklist regtunelist) citylist | multicheckcityR (Reg regcitylist _ _) citylist == False = error "Alguna ciudad no pertenece a la region"
                                                           | 
 
-
-
-
-
-
-
-
-
-
-
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
+connectedR (Reg _ _ tunelist) city1 city2 = foldr (\each fold -> connectsT city1 city2 each  || fold ) False tunelist
+
+
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
+linkedR (Reg _ linklist _) city1 city2 = foldr (\each fold -> connectsL city1 city2 each  || fold ) False linklist
+
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
+
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
