@@ -41,5 +41,7 @@ tunel1 = newT [link1,link2]
 tunel2 = newT [link1,link2,link3,link4]
 tunel3 = newT [link1,link3,link2,link4]
 
-region1 = (newR [atlanta, nyc, tokyo, miami, bsas] [link1,link2,link3,link4] [tunel1])
-
+region1 = newR
+region2 = newR
+region3 = newR
+region4 = newR
