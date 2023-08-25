@@ -51,7 +51,9 @@ delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indi
 delayR (Reg _ _ tunelist) city1 city2 | connectedR (Reg [] [] tunelist) city1 city2 = foldr (\each fold -> delayT each + fold) 0 tunelist
                                       | otherwise = error "Estas ciudades no están conectadas"
 
---availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
+availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
+availableCapacityForR (Reg _ linklist _) city1 city2 | linkedR (Reg [] linklist []) city1 city2 = foldr(\each fold -> capacityL each + fold) 0 linklist
+                                                     | otherwise = error "No hay un link entre estas dos ciudades"
 
 
 p1 = newP 10 10
