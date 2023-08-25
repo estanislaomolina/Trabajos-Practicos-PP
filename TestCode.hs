@@ -50,7 +50,3 @@ tunDel1 = delayT tunel1
 region1 = newR
 addCit1 = foundR region1 c1
 linR = linkR addCit1 c1 c2 q1
-
-checkCit1 = checkcityR linR c1
-checkCit2 = checkcityR linR c2
-checkCit3 = checkcityR linR c3
