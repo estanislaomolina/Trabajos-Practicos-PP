@@ -25,7 +25,7 @@ tokyo = newC "Tokyo" p3
 miami = newC "Miami" p4
 bsas = newC "Buenos Aires" p5
 
-Ultra = newQ "Ultra" 10 5
+ultra = newQ "Ultra" 10 5
 prime = newQ "Prime" 5 3
 super = newQ "Super" 4 2 
 good = newQ "Good" 3 1.5
@@ -35,11 +35,11 @@ bad = newQ "Bad" 1 0.5
 link1 = newL atlanta nyc good
 link2 = newL nyc miami mid
 link3 = newL miami tokyo bad
-link4 = newL tokyo bsas Ultra
+link4 = newL tokyo bsas ultra
 
 tunel1 = newT [link1,link2]
 tunel2 = newT [link1,link2,link3,link4]
 tunel3 = newT [link1,link3,link2,link4]
 
-Asia = newR nyc good tunel1
+region1 = (newR [atlanta, nyc, tokyo, miami, bsas] [link1,link2,link3,link4] [tunel1])
 
