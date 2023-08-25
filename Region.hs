@@ -44,6 +44,61 @@ linkedR (Reg _ linklist _) city1 city2 = foldr (\each fold -> linksL city1 city2
 
 p1 = newP 10 10
 p2 = newP 8 10
+p3 = newP 2 1
+p4 = newP 1 1
+p5 = newP 3 3 
+p6 = newP 7 7 
+p7 = newP 8 8
+p8 = newP 9 9
+
+dist = difP p1 p2
+
+atlanta = newC "Atlanta" p1
+nyc = newC "NYC" p2
+tokyo = newC "Tokyo" p3
+miami = newC "Miami" p4
+bsas = newC "Buenos Aires" p5
+
+bluelabel = newQ "Blue Label" 100 10
+ultra = newQ "Ultra" 10 5
+prime = newQ "Prime" 5 3
+super = newQ "Super" 4 2 
+good = newQ "Good" 3 1.5
+mid = newQ "Mid" 2 1
+bad = newQ "Bad" 1 0.5
+
+link1 = newL atlanta nyc good
+link2 = newL nyc miami mid
+link3 = newL miami tokyo bad
+link4 = newL tokyo bsas ultra
+
+tunel1 = newT [link1,link2]
+tunel2 = newT [link1,link2,link3,link4]
+tunel3 = newT [link1,link3,link2,link4]
+
+region1 = foundR newR atlanta
+region2 = foundR region1 nyc
+region3 = foundR region2 tokyo
+region4 = foundR region3 miami
+region5 = foundR region4 bsas
+
+region6 = linkR region5 atlanta nyc bad
+region7 = linkR region6 nyc tokyo mid
+region8 = linkR region7 tokyo miami good
+region9 = linkR region8 miami bsas prime
+
+region10 = linkR region6 tokyo miami mid
+reigon11 = linkR region7 miami bsas super
+
+citylist1 = [bsas, miami, tokyo, nyc, atlanta]
+citylist2 = [bsas,       tokyo, nyc, atlanta]
+citylist3 = [atlanta, nyc]
+citylist4 = [miami, bsas]
+
+
+
+{- p1 = newP 10 10
+p2 = newP 8 10
 p3 = newP 5 5
 dist = difP p1 p2
 
@@ -100,3 +155,5 @@ checkLin2 = checklinkR region4 [c1, c2, c3] -- False
 checkLin3 = checklinkR region4 [c3] -- False
 region5 = linkR region4 c3 c2 q2
 checkLin4 = checklinkR region5 [c1, c2, c3] -- True
+ -}
+
