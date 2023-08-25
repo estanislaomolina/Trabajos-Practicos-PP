@@ -24,18 +24,28 @@ checkcityR (Reg citylist _ _) citytarget = foldr (\each fold -> each == citytarg
 multicheckcityR :: Region -> [ City ] -> Bool -- chequea si todas las ciudades de la lista pertenecen a la region
 multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist = foldr(\each fold -> checkcityR (Reg rcitylist rlinklist rtunelist) each && fold ) True citylist
 
-checklinkR :: Region -> [ City ] -> Bool
-checklinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> linkedR (Reg rcitylist rlinklist rtunelist) each next && fold ) True (zip citylist (tail citylist))
+savelinkR :: Region -> City -> City -> [Link]
+savelinkR (Reg _ linklist _) city1 city2 = foldr (\each fold -> if linksL city1 city2 each then fold ++ [each] else fold) [] linklist
+
+multisavelinkR :: Region -> [ City ] -> [Link]
+multisavelinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> fold ++ (savelinkR (Reg rcitylist rlinklist rtunelist) each next)  ) [] (zip citylist (tail citylist))
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
-tunelR (Reg rcitylist rlinklist rtunelist) citylist | multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist == False = error "Alguna ciudad no pertenece a la region"
+tunelR (Reg rcitylist rlinklist rtunelist) citylist 
+   | not (multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist)  = error "Hay por lo menos alguna ciudad no pertenece a la region" 
+   | not (checklinkR (Reg rcitylist rlinklist rtunelist) citylist) = error "Hay por lo menos algun par de ciudades que no estan conectadas por links"
+   | otherwise = Reg rcitylist rlinklist (rtunelist ++ [(newT (multisavelinkR (Reg rcitylist rlinklist rtunelist) citylist ))])
+      where 
+         checklinkR :: Region -> [ City ] -> Bool
+         checklinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> linkedR (Reg rcitylist rlinklist rtunelist) each next && fold ) True (zip citylist (tail citylist))
+                                                         
+
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 connectedR (Reg _ _ tunelist) city1 city2 = foldr (\each fold -> connectsT city1 city2 each  || fold ) False tunelist
 
-
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
-linkedR (Reg _ linklist _) city1 city2 = foldr (\each fold -> linksL city1 city2 each  || fold ) False linklist
+linkedR (Reg _ linklist _) city1 city2 = foldr (\each fold -> linksL city1 city2 each || fold ) False linklist
 
 --delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
 
@@ -95,8 +105,10 @@ citylist2 = [bsas,       tokyo, nyc, atlanta]
 citylist3 = [atlanta, nyc]
 citylist4 = [miami, bsas]
 
-checklinkR1 = checklinkR region9 citylist1 -- Devuelve True
-checklinkR2 = checklinkR region11 citylist1 -- Devuelve False
-checklinkR3 = checklinkR region11 citylist4 -- Devuelve True
+--checklinkR1 = checklinkR region9 citylist1 -- Devuelve True
+--checklinkR2 = checklinkR region11 citylist1 -- Devuelve False
+--checklinkR3 = checklinkR region11 citylist4 -- Devuelve True 
 
-
+tunelR1 = tunelR region9 citylist1
+tunelR2 = tunelR region11 citylist1
+tunelR3 = tunelR (Reg [] [] []) citylist1
