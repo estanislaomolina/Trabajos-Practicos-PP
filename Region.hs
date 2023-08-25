@@ -1,4 +1,4 @@
-module Region ( Region, newR, foundR, linkR, tunelR, connectedR, linkedR) --delayR, availableCapacityForR)
+module Region ( Region, newR, foundR, linkR, tunelR, connectedR, linkedR, delayR) --availableCapacityForR)
    where
 
 import Point
@@ -47,7 +47,9 @@ connectedR (Reg _ _ tunelist) city1 city2 = foldr (\each fold -> connectsT city1
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
 linkedR (Reg _ linklist _) city1 city2 = foldr (\each fold -> linksL city1 city2 each || fold ) False linklist
 
---delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
+delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
+delayR (Reg _ _ tunelist) city1 city2 | connectedR (Reg [] [] tunelist) city1 city2 = foldr (\each fold -> delayT each + fold) 0 tunelist
+                                      | otherwise = error "Estas ciudades no están conectadas"
 
 --availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
 
