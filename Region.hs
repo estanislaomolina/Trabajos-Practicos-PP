@@ -21,11 +21,11 @@ linkR (Reg citylist linklist tunelist) city1 city2 quality = Reg citylist (linkl
 checkcityR :: Region -> City -> Bool -- chequea si una ciudad pertenece a una region
 checkcityR (Reg citylist _ _) citytarget = foldr (\each fold -> each == citytarget || fold ) False citylist
 
-multicheckcityR :: Region -> [ City ] -> Bool -- cheque si todas las ciudades de la lista pertenecen a la region
+multicheckcityR :: Region -> [ City ] -> Bool -- chequea si todas las ciudades de la lista pertenecen a la region
 multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist = foldr(\each fold -> checkcityR (Reg rcitylist rlinklist rtunelist) each && fold ) True citylist
 
 checklinkR :: Region -> [ City ] -> Bool
-checklinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> linkedR (Reg rcitylist rlinklist rtunelist) each next || fold ) False (zip citylist (tail citylist))
+checklinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> linkedR (Reg rcitylist rlinklist rtunelist) each next && fold ) True (zip citylist (tail citylist))
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg rcitylist rlinklist rtunelist) citylist | multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist == False = error "Alguna ciudad no pertenece a la region"
@@ -82,14 +82,21 @@ tunUse2 = usesT link1 tunel2
 tunDel1 = delayT tunel1
 
 region1 = newR
-addCit1 = foundR region1 c1
-linR = linkR addCit1 c1 c2 q1
+region2 = foundR region1 c1
+region3 = linkR region2 c1 c2 q1
+region4 = foundR region3 c2
 
-checkCit1 = checkcityR linR c1 -- True
-checkCit2 = checkcityR linR c2 -- True
-checkCit3 = checkcityR linR c3 -- False
+checkCit1 = checkcityR region4 c1 -- True
+checkCit2 = checkcityR region4 c2 -- True
+checkCit3 = checkcityR region4 c3 -- False
 
-multcheckCit1 = multicheckcityR linR [c1, c2]
-multcheckCit2 = multicheckcityR linR [c1, c2, c3]
-multcheckCit3 = multicheckcityR linR [c1, c3]
-multcheckCit4 = multicheckcityR linR [c3]
+multcheckCit1 = multicheckcityR region4 [c1, c2]
+multcheckCit2 = multicheckcityR region4 [c1, c2, c3]
+multcheckCit3 = multicheckcityR region4 [c1, c3]
+multcheckCit4 = multicheckcityR region4 [c2]
+
+checkLin1 = checklinkR region4 [c1, c2] -- True
+checkLin2 = checklinkR region4 [c1, c2, c3] -- False
+checkLin3 = checklinkR region4 [c3] -- False
+region5 = linkR region4 c3 c2 q2
+checkLin4 = checklinkR region5 [c1, c2, c3] -- True
