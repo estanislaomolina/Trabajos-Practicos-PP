@@ -22,22 +22,22 @@ checkcityR :: Region -> City -> Bool -- chequea si una ciudad pertenece a una re
 checkcityR (Reg citylist _ _) citytarget = foldr (\each fold -> each == citytarget || fold ) False citylist
 
 multicheckcityR :: Region -> [ City ] -> Bool -- chequea si todas las ciudades de la lista pertenecen a la region
-multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist = foldr(\each fold -> checkcityR (Reg rcitylist rlinklist rtunelist) each && fold ) True citylist
+multicheckcityR region@(Reg rcitylist rlinklist rtunelist) citylist = foldr(\each fold -> checkcityR region each && fold ) True citylist
 
 savelinkR :: Region -> City -> City -> [Link]
 savelinkR (Reg _ linklist _) city1 city2 = foldr (\each fold -> if linksL city1 city2 each then fold ++ [each] else fold) [] linklist
 
 multisavelinkR :: Region -> [ City ] -> [Link]
-multisavelinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> fold ++ (savelinkR (Reg rcitylist rlinklist rtunelist) each next)  ) [] (zip citylist (tail citylist))
+multisavelinkR region@(Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> fold ++ (savelinkR region each next)  ) [] (zip citylist (tail citylist))
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
-tunelR (Reg rcitylist rlinklist rtunelist) citylist 
-   | not (multicheckcityR (Reg rcitylist rlinklist rtunelist) citylist)  = error "Hay por lo menos alguna ciudad no pertenece a la region" 
-   | not (checklinkR (Reg rcitylist rlinklist rtunelist) citylist) = error "Hay por lo menos algun par de ciudades que no estan conectadas por links"
-   | otherwise = Reg rcitylist rlinklist (rtunelist ++ [(newT (multisavelinkR (Reg rcitylist rlinklist rtunelist) citylist ))])
+tunelR region@(Reg rcitylist rlinklist rtunelist) citylist 
+   | not (multicheckcityR region citylist)  = error "Hay por lo menos alguna ciudad no pertenece a la region" 
+   | not (checklinkR region citylist) = error "Hay por lo menos algun par de ciudades que no estan conectadas por links"
+   | otherwise = Reg rcitylist rlinklist (rtunelist ++ [(newT (multisavelinkR region citylist ))])
       where 
          checklinkR :: Region -> [ City ] -> Bool
-         checklinkR (Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> linkedR (Reg rcitylist rlinklist rtunelist) each next && fold ) True (zip citylist (tail citylist))
+         checklinkR region@(Reg rcitylist rlinklist rtunelist) citylist = foldr (\(each, next) fold -> linkedR region each next && fold ) True (zip citylist (tail citylist))
                                                          
 
 
@@ -48,13 +48,12 @@ linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan 
 linkedR (Reg _ linklist _) city1 city2 = foldr (\each fold -> linksL city1 city2 each || fold ) False linklist
 
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
-delayR (Reg _ _ tunelist) city1 city2 | connectedR (Reg [] [] tunelist) city1 city2 = foldr (\each fold -> delayT each + fold) 0 tunelist
-                                      | otherwise = error "Estas ciudades no están conectadas"
+delayR region@(Reg _ _ tunelist) city1 city2 | connectedR region city1 city2 = foldr (\each fold -> delayT each + fold) 0 tunelist
+                                             | otherwise = error "Estas ciudades no están conectadas por un tunel"
 
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
-availableCapacityForR (Reg _ linklist _) city1 city2 | linkedR (Reg [] linklist []) city1 city2 = foldr(\each fold -> capacityL each + fold) 0 linklist
+availableCapacityForR region@(Reg citylist linklist tunelist) city1 city2 | linkedR region city1 city2 = foldr(\each fold -> capacityL each + fold) 0 linklist
                                                      | otherwise = error "No hay un link entre estas dos ciudades"
-
 
 p1 = newP 10 10
 p2 = newP 8 10
@@ -73,7 +72,7 @@ tokyo = newC "Tokyo" p3
 miami = newC "Miami" p4
 bsas = newC "Buenos Aires" p5
 
-bluelabel = newQ "Blue Label" 100 10
+bluelabel = newQ "Blue Label" 100 1
 ultra = newQ "Ultra" 10 5
 prime = newQ "Prime" 5 3
 super = newQ "Super" 4 2 
@@ -116,3 +115,7 @@ citylist4 = [miami, bsas]
 tunelR1 = tunelR region9 citylist1
 tunelR2 = tunelR region11 citylist1
 tunelR3 = tunelR (Reg [] [] []) citylist1
+
+delayR1 = delayR tunelR1 atlanta bsas
+delayR2 = delayR tunelR2 atlanta bsas
+delayR3 = delayR tunelR1 atlanta tokyo
