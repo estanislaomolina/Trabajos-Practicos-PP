@@ -52,8 +52,11 @@ delayR region@(Reg _ _ tunelist) city1 city2 | connectedR region city1 city2 = f
                                              | otherwise = error "Estas ciudades no están conectadas por un tunel"
 
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
-availableCapacityForR region@(Reg citylist linklist tunelist) city1 city2 | linkedR region city1 city2 = foldr(\each fold -> capacityL each + fold) 0 linklist
-                                                     | otherwise = error "No hay un link entre estas dos ciudades"
+availableCapacityForR region@(Reg citylist linklist tunelist) city1 city2 
+   | not (linkedR region city1 city2)= error "No hay un link entre estas dos ciudades" 
+   | otherwise = (-) (foldr (\each fold -> (+) (capacityL each) fold ) 0 (foldr (\each fold -> if linksL city1 city2 each then fold ++ [each] else fold ) [] linklist)) (foldr (\each fold -> if connectedR region city1 city2 then fold + 1 else fold) 0 tunelist)
+--se fija cuanta capacidad tienen dos ciudades sumando la capacidades de todos los links que las une. Despues le resta todas las veces que se usan esos links en los tuneles
+--faltaria hacer que si devuelve un numero negativo devuelva 0 encambio
 
 p1 = newP 10 10
 p2 = newP 8 10
