@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 
 public class Queue {
-
-  public boolean isEmpty() {
+	ArrayList<Object> list = new ArrayList<Object>();
+	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return true;
 	}
