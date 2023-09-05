@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 public class Queue {
-	ArrayList<Object> list = new ArrayList<Object>();
+	ArrayList<Object> lista = new ArrayList<Object>(); //creo una lista vacia de tipo object
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return true;
+		return lista.isEmpty();
 	}
 
 	public Queue add( Object  cargo ) {
 		// TODO Auto-generated method stub
+		lista.add(cargo);
 		return this;
 	}
 
