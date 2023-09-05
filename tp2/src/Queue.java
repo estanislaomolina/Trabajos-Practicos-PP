@@ -7,19 +7,19 @@ public class Queue {
 	}
 
 	public Queue add( Object  cargo ) {
-		// TODO Auto-generated method stub
 		lista.add(cargo);
 		return this;
 	}
 
 	public Object take() {
     // TODO Auto-generated method stub
+		lista.remove(0);
 		return null;
 	}
 
 	public Object head() {
 		// TODO Auto-generated method stub
-    return null;
+    return lista.get(0);
 	}
 
 	public int size() {
