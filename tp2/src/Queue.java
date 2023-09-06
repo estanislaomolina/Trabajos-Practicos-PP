@@ -13,8 +13,9 @@ public class Queue {
 
 	public Object take() {
     // TODO Auto-generated method stub
+		Object elem1 = lista.get(0);
 		lista.remove(0);
-		return null;
+		return elem1;
 	}
 
 	public Object head() {
