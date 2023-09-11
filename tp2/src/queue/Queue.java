@@ -1,3 +1,5 @@
+package queue;
+
 import java.util.ArrayList;
 
 public class Queue {
@@ -35,4 +37,3 @@ public class Queue {
 	}
 
 }
-
