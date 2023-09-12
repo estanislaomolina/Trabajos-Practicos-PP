@@ -1,4 +1,6 @@
 package queue;
+
+
 public class NotEmptyQueue extends QueueState {
 
     public Object object;
@@ -14,11 +16,11 @@ public class NotEmptyQueue extends QueueState {
 
     @Override
     public Object head(Queue queue) {
-        return queue.
+        return queue.notEmptytake();
     }
 
     @Override
     public Object take(Queue queue){
-		  return Queue.queue.remove( FirstItemInQueue );
+		  return Queue.lista.remove( FirstItemInQueue );
     }
 }

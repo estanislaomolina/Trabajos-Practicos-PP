@@ -3,37 +3,37 @@ package queue;
 import java.util.ArrayList;
 
 public class Queue {
-	public ArrayList<Object> queue = new ArrayList<Object>();
+	public static ArrayList<Object> lista = new ArrayList<Object>();
 	public static String QueIsEmpty = "Queue is empty";
-	private static final int FirstItemInQueue = 0;
+	//public static final int FirstItemInQueue = 0;
 
   	public boolean isEmpty() {
-        return queue.isEmpty();
+        return (lista.size() -1).isempty;
 	}
 
 	public Queue add( Object  cargo ) {
-		queue.add( cargo );
+		lista.add( cargo );
 		return this;
 	}
 
 	public Object take() {
-		  if (queue.isEmpty()) {
+		  if (lista.isEmpty()) {
 			  throw new Error(QueIsEmpty);
 		  }
-		  else {return queue.remove( FirstItemInQueue );
+		  else {return lista.remove( FirstItemInQueue );
 
 		  }
 	}
 
 	public Object head() {
-		  if (queue.isEmpty()) {
+		  if (lista.isEmpty()) {
 		    throw new Error(QueIsEmpty);
 		  }
-		return queue.get( FirstItemInQueue );
+		return lista.get( FirstItemInQueue );
 	}
 
 	public int size() {
-		  return queue.size();
+		  return lista.size();
 	}
 
 }
