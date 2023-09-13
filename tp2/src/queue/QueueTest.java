@@ -12,8 +12,7 @@ public class QueueTest {
 
   @Test public void test02AddElementsToTheQueue() {
     assertFalse( new Queue().add( "Something" ).isEmpty() );
-  } //crea una lista, le agrega un "something", chequea si esta vacío, y el assertFalse tira un error si lo que esta dentro no es falso
-
+  }
   @Test public void test03AddedElementsIsAtHead() {
     assertEquals( "Something", new Queue().add( "Something" ).head() );
   }

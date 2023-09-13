@@ -3,37 +3,44 @@ package queue;
 import java.util.ArrayList;
 
 public class Queue {
-	public static ArrayList<Object> lista = new ArrayList<Object>();
-	public static String QueIsEmpty = "Queue is empty";
-	//public static final int FirstItemInQueue = 0;
+	private static final ArrayList<Container> lista = new ArrayList<>();
+	public static String EmptyQueueError = "Queue is empty";
+	static final int FirstItemInQueue = 0;
 
-  	public boolean isEmpty() {
-        return (lista.size() -1).isempty;
+	public Queue() {
+		lista.add(new EmptyContainer());
 	}
 
-	public Queue add( Object  cargo ) {
-		lista.add( cargo );
+	public static Container removeElement() {
+		return lista.remove(FirstItemInQueue);
+	}
+
+	public boolean isEmpty(){
+		return getElement(lista.size()-1).isEmpty();
+		}
+
+	public Queue add (Object cargo) {
+		lista.add(new NotEmptyContainer(cargo));
 		return this;
 	}
 
 	public Object take() {
-		  if (lista.isEmpty()) {
-			  throw new Error(QueIsEmpty);
-		  }
-		  else {return lista.remove( FirstItemInQueue );
-
-		  }
+		//return (lista.remove(getElement(lista.size()-1)).getObject(this);
+		//return getElement(lista.size()-1).getObject(this);
+		//TODO creo que el take no anda bien
+		return removeElement().getObject(this);
 	}
 
 	public Object head() {
-		  if (lista.isEmpty()) {
-		    throw new Error(QueIsEmpty);
-		  }
-		return lista.get( FirstItemInQueue );
+		//return lista.get(getElement.size()-1).getObject(this);
+		//return getElement(lista.size()-1).getObject(this);
+		return lista.get(FirstItemInQueue).getObject(this);
 	}
 
 	public int size() {
-		  return lista.size();
+		  return lista.size() -1;
 	}
-
+	static Container getElement(int QueuePosition) {
+		return lista.get(QueuePosition);
+	}
 }
