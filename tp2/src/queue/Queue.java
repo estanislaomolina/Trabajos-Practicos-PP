@@ -20,21 +20,26 @@ public class Queue {
 		}
 
 	public Queue add (Object cargo) {
+		//lista.add(size(), new NotEmptyContainer(cargo));
 		lista.add(new NotEmptyContainer(cargo));
 		return this;
 	}
 
 	public Object take() {
+		//return lista.getObject(this)
+		return (lista.remove(lista.size()-1).getObject(this));
 		//return (lista.remove(getElement(lista.size()-1)).getObject(this);
 		//return getElement(lista.size()-1).getObject(this);
 		//TODO creo que el take no anda bien
-		return removeElement().getObject(this);
+		//return removeElement().getObject(this);
+
 	}
 
 	public Object head() {
 		//return lista.get(getElement.size()-1).getObject(this);
 		//return getElement(lista.size()-1).getObject(this);
-		return lista.get(FirstItemInQueue).getObject(this);
+		//return lista.get(FirstItemInQueue).getObject(this);
+		//return lista.peek();
 	}
 
 	public int size() {

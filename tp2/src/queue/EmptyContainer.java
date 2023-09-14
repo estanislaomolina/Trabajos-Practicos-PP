@@ -7,7 +7,7 @@ public class EmptyContainer extends Container {
     ///}
 
     @Override
-    public Object getObject(Object object) {
+    public Object getObject(Object cargo) {
         throw new Error (Queue.EmptyQueueError);
     }
 

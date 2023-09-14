@@ -4,9 +4,9 @@ import static queue.Queue.FirstItemInQueue;
 
 public class NotEmptyContainer extends Container {
 
-        private Object object;
-        public NotEmptyContainer(Object object) {
-            this.object = object;
+        private Object cargo;
+        public NotEmptyContainer(Object cargo) {
+            this.cargo = cargo;
         }
 
         //public Object getObject(Queue queue){
@@ -14,8 +14,8 @@ public class NotEmptyContainer extends Container {
         //}
 
     @Override
-    public Object getObject(Object object) {
-        return this.object;
+    public Object getObject(Object cargo) {
+        return this.cargo;
     }
 
     //@Override
