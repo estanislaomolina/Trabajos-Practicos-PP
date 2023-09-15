@@ -5,5 +5,11 @@ public abstract class Container {
 
     public abstract Object getObject(Object cargo);
 
+
     public abstract boolean isEmpty();
+
 }
+
+
+
+

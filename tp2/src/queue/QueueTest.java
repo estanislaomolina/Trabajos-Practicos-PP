@@ -13,6 +13,7 @@ public class QueueTest {
   @Test public void test02AddElementsToTheQueue() {
     assertFalse( new Queue().add( "Something" ).isEmpty() );
   }
+
   @Test public void test03AddedElementsIsAtHead() {
     assertEquals( "Something", new Queue().add( "Something" ).head() );
   }
