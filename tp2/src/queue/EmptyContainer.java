@@ -7,11 +7,6 @@ public class EmptyContainer extends Container {
         throw new Error(Queue.EmptyQueueError);
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     public boolean equals(Object obj) {
         return super.equals(obj);
     }

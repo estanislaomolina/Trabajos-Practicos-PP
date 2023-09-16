@@ -3,7 +3,7 @@ package queue;
 import java.util.ArrayList;
 
 public class Queue {
-	private  ArrayList<Container> lista = new ArrayList<>();
+	private final ArrayList<Container> lista = new ArrayList<>();
 	public static String EmptyQueueError = "Queue is empty";
 
 	public Queue () {
