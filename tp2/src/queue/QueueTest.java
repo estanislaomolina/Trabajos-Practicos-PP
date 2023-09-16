@@ -14,8 +14,7 @@ public class QueueTest {
   public static final String EmptyQueueError = "Queue is empty";
 
   private static Queue newQueue() {
-    Queue queue = new Queue();
-    return queue;
+      return new Queue();
   }
   private static Queue QueueWithSomething() {
     return new Queue().add(SomethingString);
