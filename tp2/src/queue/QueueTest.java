@@ -11,7 +11,6 @@ public class QueueTest {
   public static final String SecondAddedObject = "Second";
   public static final int QueueSize1 = 1;
   public static final int QueueSize2 = 2;
-  //public static final String ExpectedErrorNotThrown = "Expected Error was not thrown.";
   public static final String EmptyQueueError = "Queue is empty";
   private void assertThrowsLike(Executable executable, String expectedMessage) {
     assertEquals(expectedMessage, assertThrows(Error.class, executable).getMessage());
