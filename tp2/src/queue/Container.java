@@ -7,7 +7,3 @@ public abstract class Container {
     public abstract boolean isEmpty();
 
 }
-
-
-
-

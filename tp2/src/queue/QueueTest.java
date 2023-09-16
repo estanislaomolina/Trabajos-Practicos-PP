@@ -1,8 +1,9 @@
 package queue;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
+import static org.junit.jupiter.api.Assertions.*;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.*;
 
 public class QueueTest {
   public static final String SomethingString = "Something";
@@ -10,8 +11,11 @@ public class QueueTest {
   public static final String SecondAddedObject = "Second";
   public static final int QueueSize1 = 1;
   public static final int QueueSize2 = 2;
-  public static final String ExpectedErrorNotThrown = "Expected Error was not thrown.";
+  //public static final String ExpectedErrorNotThrown = "Expected Error was not thrown.";
   public static final String EmptyQueueError = "Queue is empty";
+  private void assertThrowsLike(Executable executable, String expectedMessage) {
+    assertEquals(expectedMessage, assertThrows(Error.class, executable).getMessage());
+  }
 
   private static Queue newQueue() {
       return new Queue();
@@ -86,33 +90,18 @@ public class QueueTest {
 
   @Test public void test10CanNotTakeWhenThereAreNoObjectsInTheQueue() {
     Queue queue = newQueue();
-    try {
-      queue.take();
-      fail(ExpectedErrorNotThrown);
-    } catch (Error e) {
-      assertTrue( e.getMessage().equals(EmptyQueueError) );
-    }
+    assertThrowsLike(() -> queue.take(), EmptyQueueError);
   }
 
-  @Test public void test09CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
+  @Test public void test11CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
     Queue queue = newQueue();
     queue.add( SomethingString );
     queue.take();
-    try {
-      queue.take();
-      fail(ExpectedErrorNotThrown);
-    } catch (Error e) {
-      assertTrue( e.getMessage().equals(EmptyQueueError) );
-    }
+    assertThrowsLike(() -> queue.take(), EmptyQueueError);
   }
 
-  @Test public void test10CanNotHeadWhenThereAreNoObjectsInTheQueue() {
+  @Test public void test12CanNotHeadWhenThereAreNoObjectsInTheQueue() {
     Queue queue = newQueue();
-    try {
-      queue.head();
-      fail(ExpectedErrorNotThrown);
-    } catch (Error e) {
-      assertTrue( e.getMessage().equals(EmptyQueueError) );
-    }
+    assertThrowsLike(() -> queue.head(), EmptyQueueError);
   }
 }

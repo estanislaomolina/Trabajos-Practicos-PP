@@ -15,7 +15,6 @@ public class Queue {
 		}
 
 	public Queue add (Object cargo) {
-		//lista.add(size(), new NotEmptyContainer(cargo));
 		lista.add(1, new NotEmptyContainer(cargo));
 		return this;
 	}

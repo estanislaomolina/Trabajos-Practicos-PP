@@ -16,6 +16,4 @@ public class NotEmptyContainer extends Container {
         return false;
     }
 
-
-
 }
