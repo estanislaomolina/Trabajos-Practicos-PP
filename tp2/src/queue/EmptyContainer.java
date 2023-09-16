@@ -2,9 +2,11 @@ package queue;
 
 public class EmptyContainer extends Container {
 
+    private static String emptyQueueError = "Queue is empty";
+
     @Override
     public Object getObject(Object cargo) {
-        throw new Error(Queue.EmptyQueueError);
+        throw new Error(emptyQueueError);
     }
 
     public boolean equals(Object obj) {
