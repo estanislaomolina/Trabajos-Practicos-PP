@@ -54,7 +54,6 @@ public class QueueTest {
     assertEquals( somethingString, queue.take() );
   }
 
-
   @Test public void test06QueueBehavesFIFO() {
     Queue queue = queueWithFirstAndSecondObjects();
 
