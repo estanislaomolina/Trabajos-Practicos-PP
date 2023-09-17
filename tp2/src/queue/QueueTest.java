@@ -12,17 +12,17 @@ public class QueueTest {
   public static final int queueSize1 = 1;
   public static final int queueSize2 = 2;
   public static final String emptyQueueError = "Queue is empty";
-  private void assertThrowsLike(Executable executable, String expectedMessage) {
-    assertEquals(expectedMessage, assertThrows(Error.class, executable).getMessage());
+  private void assertThrowsLike(Executable executable) {
+    assertEquals(QueueTest.emptyQueueError, assertThrows(Error.class, executable).getMessage());
   }
 
-  private static Queue newQueue() {
+  private Queue newQueue() {
       return new Queue();
   }
-  private static Queue queueWithSomething() {
+  private Queue queueWithSomething() {
     return new Queue().add(somethingString);
   }
-  private static Queue queueWithFirstAndSecondObjects() {
+  private Queue queueWithFirstAndSecondObjects() {
     Queue queue = newQueue();
     queue.add(firstAddedObject);
     queue.add(secondAddedObject);
@@ -65,9 +65,8 @@ public class QueueTest {
 
 
   @Test public void test07HeadReturnsFirstAddedObject() {
-    Queue queue = queueWithFirstAndSecondObjects();
 
-    assertEquals( queue.head(), firstAddedObject );
+    assertEquals( queueWithFirstAndSecondObjects().head(), firstAddedObject );
   }
 
   @Test public void test08HeadDoesNotRemoveObjectFromQueue() {
@@ -89,19 +88,17 @@ public class QueueTest {
   }
 
   @Test public void test10CanNotTakeWhenThereAreNoObjectsInTheQueue() {
-    Queue queue = newQueue();
-    assertThrowsLike(queue::take, emptyQueueError);
+    assertThrowsLike(newQueue()::take);
   }
 
   @Test public void test11CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
     Queue queue = newQueue();
           queue.add( somethingString );
           queue.take();
-          assertThrowsLike(queue::take, emptyQueueError);
+          assertThrowsLike(queue::take);
   }
 
   @Test public void test12CanNotHeadWhenThereAreNoObjectsInTheQueue() {
-    Queue queue = newQueue();
-    assertThrowsLike(queue::head, emptyQueueError);
+    assertThrowsLike(newQueue()::head);
   }
 }
