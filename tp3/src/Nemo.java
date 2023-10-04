@@ -1,5 +1,12 @@
 public class Nemo {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public int coordinateX;
+    public int coordinateY;
+    public int depth;
+    public String cardinalPoint;
+    public Nemo(int coordinateX, int coordinateY, int depth, String cardinalPoint) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+        this.depth = depth;
+        this.cardinalPoint = cardinalPoint;
     }
 }
