@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Nemo {
     public int coordinateX;
     public int coordinateY;
@@ -8,5 +10,10 @@ public class Nemo {
         this.coordinateY = coordinateY;
         this.depth = depth;
         this.cardinalPoint = cardinalPoint;
+    }
+    public void move(ArrayList<Character> commands, Movements movements){
+        for (char command : commands) {
+            Movements.move(command, this, movements);
+        }
     }
 }
