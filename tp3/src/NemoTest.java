@@ -40,4 +40,7 @@ public class NemoTest {
     @Test public void test07ReleaseCapsule(){
 
     }
+    @Test public void tets08InvalidCommand(){
+
+    }
 }
