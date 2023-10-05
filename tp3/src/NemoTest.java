@@ -46,18 +46,39 @@ public class NemoTest {
         assertEquals(initialDepth +1, nemo.depth);
     }
     @ Test public void test04TurnLeft(){
-
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        commands.add('l');
+        nemo.move(commands, newMovements());
+        assertEquals("West", nemo.cardinalPoint);
     }
     @ Test public void test05TurnRight(){
-
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        commands.add('r');
+        nemo.move(commands, newMovements());
+        assertEquals("East", nemo.cardinalPoint);
     }
     @Test public void test06MoveOneUnitForward(){
-
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        commands.add('f');
+        nemo.move(commands, newMovements());
+        assertEquals(initialCoordinateY +1, nemo.coordinateY);
     }
     @Test public void test07ReleaseCapsule(){
 
     }
     @Test public void test08InvalidCommandShouldNotAffectItsPosition(){
-
+        Nemo nemo = new Nemo (initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        commands.add('x');
+        nemo.move(commands, newMovements());
+        assertEquals(initialCoordinateX, nemo.coordinateX);
+        assertEquals(initialCoordinateY, nemo.coordinateY);
+        assertEquals(initialDepth, nemo.depth);
+        assertEquals(initialCardinalPoint, nemo.cardinalPoint);
+        try {
+            nemo.move(commands, newMovements());
+            fail("Expected an RuntimeException to be thrown");
+        } catch (RuntimeException runtimeException) {
+            assertEquals("Invalid command", runtimeException.getMessage());
+        }
     }
 }
