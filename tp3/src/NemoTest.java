@@ -42,9 +42,10 @@ public class NemoTest {
     }
     @ Test public void test03MoveOneUnitUp(){
         Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        nemo.depth = -1;
         commands.add('u');
         nemo.move(commands, newMovements());
-        assertEquals(initialDepth +1, nemo.depth);
+        assertEquals(initialDepth, nemo.depth);
     }
     @ Test public void test04TurnLeft(){
         Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
