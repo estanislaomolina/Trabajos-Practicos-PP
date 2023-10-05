@@ -63,6 +63,9 @@ public class Movements {
     }
     public static void releaseCapsule(Nemo nemo, Movements movements){
         movements.addCommand('m');
+        if (nemo.depth < -1) {
+            throw new RuntimeException("Submarine destroyed due to excess chocolate.");
+        }
 
     }
 
