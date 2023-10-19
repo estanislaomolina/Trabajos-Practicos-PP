@@ -1,3 +1,5 @@
+package Submarine;
+
 import java.util.ArrayList;
 
 public class Movements {
@@ -37,28 +39,28 @@ public class Movements {
     public static void rotateLeft(Nemo nemo, Movements movements){
         movements.addCommand('l');
         switch (nemo.cardinalPoint) {
-            case "North" -> nemo.cardinalPoint = "West";
-            case "West" -> nemo.cardinalPoint = "South";
-            case "South" -> nemo.cardinalPoint = "East";
-            case "East" -> nemo.cardinalPoint = "North";
+            case "Position.North" -> nemo.cardinalPoint = "Position.West";
+            case "Position.West" -> nemo.cardinalPoint = "Position.South";
+            case "Position.South" -> nemo.cardinalPoint = "Position.East";
+            case "Position.East" -> nemo.cardinalPoint = "Position.North";
         }
     }
     public static void rotateRight(Nemo nemo, Movements movements){
         movements.addCommand('r');
         switch (nemo.cardinalPoint) {
-            case "North" -> nemo.cardinalPoint = "East";
-            case "East" -> nemo.cardinalPoint = "South";
-            case "South" -> nemo.cardinalPoint = "West";
-            case "West" -> nemo.cardinalPoint = "North";
+            case "Position.North" -> nemo.cardinalPoint = "Position.East";
+            case "Position.East" -> nemo.cardinalPoint = "Position.South";
+            case "Position.South" -> nemo.cardinalPoint = "Position.West";
+            case "Position.West" -> nemo.cardinalPoint = "Position.North";
         }
     }
     public static void moveForward(Nemo nemo, Movements movements){
         movements.addCommand('f');
         switch (nemo.cardinalPoint) {
-            case "North" -> nemo.coordinateY++;
-            case "East" -> nemo.coordinateX++;
-            case "South" -> nemo.coordinateY--;
-            case "West" -> nemo.coordinateX--;
+            case "Position.North" -> nemo.coordinateY++;
+            case "Position.East" -> nemo.coordinateX++;
+            case "Position.South" -> nemo.coordinateY--;
+            case "Position.West" -> nemo.coordinateX--;
         }
     }
     public static void releaseCapsule(Nemo nemo, Movements movements){

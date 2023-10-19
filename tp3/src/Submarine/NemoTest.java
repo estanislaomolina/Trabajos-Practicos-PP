@@ -1,8 +1,13 @@
+package Submarine;
+
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import Submarine.Nemo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,7 +17,7 @@ public class NemoTest {
     public static final int initialCoordinateX = 0;
     public static final int initialCoordinateY = 0;
     public static final int initialDepth = 0;
-    public static final String initialCardinalPoint = "North";
+    public static final String initialCardinalPoint = "Position.North";
     private static Movements newMovements() {
         return new Movements();
     }
@@ -27,7 +32,7 @@ public class NemoTest {
     }
     @ Test public void test01DoNotMoveGivenAnEmptyListOfCommands(){
         Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
-        assertTrue(newMovements().isEmpty());
+        Assertions.assertTrue(newMovements().isEmpty());
         assertEquals(initialCoordinateX, nemo.coordinateX);
         assertEquals(initialCoordinateY, nemo.coordinateY);
         assertEquals(initialDepth, nemo.depth);
@@ -51,13 +56,13 @@ public class NemoTest {
         Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
         commands.add('l');
         nemo.move(commands, newMovements());
-        assertEquals("West", nemo.cardinalPoint);
+        assertEquals("Position.West", nemo.cardinalPoint);
     }
     @ Test public void test05TurnRight(){
         Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
         commands.add('r');
         nemo.move(commands, newMovements());
-        assertEquals("East", nemo.cardinalPoint);
+        assertEquals("Position.East", nemo.cardinalPoint);
     }
     @Test public void test06MoveOneUnitForward(){
         Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
