@@ -12,12 +12,4 @@ public class Coordinates {
         this.depth = depth;
         this.cardinalPoint = cardinalPoint;
     }
-
-    public void up () {
-        this.depth++;
-    }
-    public void down () {
-        this.depth--;
-    }
-
 }

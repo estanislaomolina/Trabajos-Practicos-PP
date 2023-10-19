@@ -19,7 +19,7 @@ public abstract class Commands {
     private static void raiseInvalidCommandException() {
         throw new RuntimeException("Invalid command");
     }
-    public static void move(char command, Nemo nemo, Movements movements){
+/*    public static void move(char command, Nemo nemo, Movements movements){
         switch (command) {
             case 'd' -> down(nemo, movements);
             case 'u' -> up(nemo, movements);
@@ -28,6 +28,6 @@ public abstract class Commands {
             case 'f' -> moveForward(nemo, movements);
             case 'm' -> releaseCapsule(nemo, movements);
             default -> raiseInvalidCommandException();
-        }
+        }*/
     }
 }
