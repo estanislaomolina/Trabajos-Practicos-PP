@@ -4,30 +4,35 @@ import Submarine.Movements;
 import Submarine.Nemo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Consumer;
 
-public abstract class Commands {
-    private final ArrayList<Character> commands = new ArrayList<>();
-    public boolean isEmpty() {
-        return commands.isEmpty();
+public class Commands {
+    private String name;
+    private Consumer<Nemo> command;
+    public static ArrayList<Commands> commands = new ArrayList<Commands>(Arrays.asList(
+            new Commands("f", Nemo::moveForward),
+            new Commands("d", Nemo::down),
+            new Commands("u", Nemo::up),
+            new Commands("l", Nemo::rotateLeft),
+            new Commands("r", Nemo::rotateRight),
+            new Commands("m", Nemo::releaseCapsule)
+    ));
+
+    public static Commands getCommand(String commandName) {
+        return commands.stream()
+                .filter(command -> command.commandEquals(commandName))
+                .findFirst()
+                .get();
     }
-    public ArrayList<Character> getCommands() {
-        return commands;
+    public Commands(String name, Consumer<Nemo> command) {
+        this.name = name;
+        this.command = command;
     }
-    private void addCommand(char command){
-        commands.add(command);
+    public void runCommands(Nemo nemo) {
+        command.accept(nemo);
     }
-    private static void raiseInvalidCommandException() {
-        throw new RuntimeException("Invalid command");
-    }
-/*    public static void move(char command, Nemo nemo, Movements movements){
-        switch (command) {
-            case 'd' -> down(nemo, movements);
-            case 'u' -> up(nemo, movements);
-            case 'l' -> rotateLeft(nemo, movements);
-            case 'r' -> rotateRight(nemo, movements);
-            case 'f' -> moveForward(nemo, movements);
-            case 'm' -> releaseCapsule(nemo, movements);
-            default -> raiseInvalidCommandException();
-        }*/
+    public boolean commandEquals(String command){
+        return this.name.equals(command);
     }
 }

@@ -9,7 +9,7 @@ public class DepthSurface extends Depths {
 
     @Override
     public void down(Nemo nemo) {
-        nemo.depth--;
+        nemo.addDepth(new Depth1BelowSurface());
     }
 
     @Override
