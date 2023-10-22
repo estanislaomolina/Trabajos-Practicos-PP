@@ -7,7 +7,6 @@ import Position.Direction;
 import Commands.Commands;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Nemo {
     private  Coordinates currentCoordinates;
@@ -31,6 +30,12 @@ public class Nemo {
 
     public Coordinates getCoordinates() {
         return this.currentCoordinates;
+    }
+    public Direction getDirection() {
+        return this.currentCardinalPoint;
+    }
+    public ArrayList<DepthState> getDepth() {
+        return depthState;
     }
 
     public void moveForward() {
