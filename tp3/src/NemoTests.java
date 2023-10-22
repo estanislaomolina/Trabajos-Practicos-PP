@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.assertEquals;
 
+
 public class NemoTests {
     private Nemo nemo;
     private Direction north() { return new North(); }
@@ -94,9 +95,63 @@ public class NemoTests {
         nemo.move("m");
         assertEquals( 0,nemo.capsulesReleased );
     }
+    @Test public void test11MoveForwardMoreThanOneTimeInSameCommand() {
+        nemo.move("ff");
+        assertEquals(0, nemo.getCoordinates().getCoordinateX());
+        assertEquals(2, nemo.getCoordinates().getCoordinateY());
+        assertEquals(north().getDirection(), nemo.currentCardinalPoint.getDirection());
+    }
 
+    @Test public void test12MoveForwardMoreThanOneTimeInDifferentCommands() {
+        nemo.move("f");
+        nemo.move("f");
+        assertEquals(0, nemo.getCoordinates().getCoordinateX());
+        assertEquals(2, nemo.getCoordinates().getCoordinateY());
+        assertEquals(north().getDirection(), nemo.currentCardinalPoint.getDirection());
+    }
+
+    @Test public void test13MoveAndTurnInSameCommand() {
+        nemo.move("fr");
+        assertEquals(0, nemo.getCoordinates().getCoordinateX());
+        assertEquals(1, nemo.getCoordinates().getCoordinateY());
+        assertEquals(east().getDirection(), nemo.currentCardinalPoint.getDirection());
+    }
+
+    @Test public void test14MoveAndTurnInDifferentCommands() {
+        nemo.move("f");
+        nemo.move("r");
+        assertEquals(0, nemo.getCoordinates().getCoordinateX());
+        assertEquals(1, nemo.getCoordinates().getCoordinateY());
+        assertEquals(east().getDirection(), nemo.currentCardinalPoint.getDirection());
+    }
+
+    @Test public void test15MoveAndTurnAndMoveInSameCommand() {
+        nemo.move("frf");
+        assertEquals(1, nemo.getCoordinates().getCoordinateX());
+        assertEquals(1, nemo.getCoordinates().getCoordinateY());
+        assertEquals(east().getDirection(), nemo.currentCardinalPoint.getDirection());
+    }
+
+    @Test public void test16MoveDownAndDropCapsuleInSameCommand() {
+        nemo.move("dm");
+        assertEquals(-1, nemo.getDepth());
+        assertEquals(1, nemo.capsulesReleased);
+    }
+
+    @Test public void test17MoveDownAndDropCapsuleInSameCommandBelowDepth01() {
+        nemo.move("ddm");
+        assertEquals(-2, nemo.getDepth());
+        assertEquals(0, nemo.capsulesReleased);
+    }
+
+    @Test public void test18InvalidCommand() {
+        nemo.move("x");
+        assertEquals(0, nemo.getCoordinates().getCoordinateX());
+        assertEquals(0, nemo.getCoordinates().getCoordinateY());
+        assertEquals(north().getDirection(), nemo.currentCardinalPoint.getDirection());
+        assertEquals(0, nemo.getDepth());
+    }
     private void positionCheck(Coordinates initialCoordinates, Direction direction, DepthState initialDepth) {
-
         assertEquals(0, initialCoordinates.getCoordinateX());
         assertEquals(0, initialCoordinates.getCoordinateY());
         assertEquals(direction.getDirection(), nemo.currentCardinalPoint.getDirection());

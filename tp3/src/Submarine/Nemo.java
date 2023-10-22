@@ -28,14 +28,14 @@ public class Nemo {
     public void command(String commands) {
         commands.chars().forEach(command -> move(String.valueOf((char) command)));
     }
-    public void move(String command) {
-        if (!command.isEmpty()) {
-            char firstChar = command.charAt(0);
-            Commands.getCommand(String.valueOf(firstChar)).runCommands(this);
-        }
-    }
 
-    public Coordinates getCoordinates() {
+    public void move(String command) {
+            for (int i = 0; i < command.length(); i++) {
+                Commands.getCommand(String.valueOf(command.charAt(i))).runCommands(this);
+            }
+        }
+
+        public Coordinates getCoordinates() {
         return this.currentCoordinates;
     }
     public Direction getDirection() {

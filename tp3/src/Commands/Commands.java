@@ -9,7 +9,13 @@ import java.util.function.Consumer;
 public class Commands {
     private String name;
     private Consumer<Nemo> command;
-    public static ArrayList<Commands> commands = new ArrayList<Commands>(Arrays.asList(
+
+    public Commands(String name, Consumer<Nemo> command) {
+        this.name = name;
+        this.command = command;
+    }
+    public static ArrayList<Commands> commands = new ArrayList<Commands>
+            (Arrays.asList(
             new Commands("f", Nemo::moveForward),
             new Commands("d", Nemo::down),
             new Commands("u", Nemo::up),
@@ -24,10 +30,7 @@ public class Commands {
                 .findFirst()
                 .get();
     }
-    public Commands(String name, Consumer<Nemo> command) {
-        this.name = name;
-        this.command = command;
-    }
+
     public void runCommands(Nemo nemo) {
         command.accept(nemo);
     }
