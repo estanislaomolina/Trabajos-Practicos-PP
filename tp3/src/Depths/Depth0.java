@@ -7,6 +7,8 @@ public class Depth0 extends DepthState {
     public Depth0 () {
         this.depthLevel = 0;
     }
+
+
     @Override
     public void up(Nemo nemo) {
     }
@@ -17,7 +19,8 @@ public class Depth0 extends DepthState {
     }
 
     @Override
-    public Object releaseCapsule(Nemo nemo) {
+    public String releaseCapsule(Nemo nemo) {
+        nemo.capsulesReleased++;
         return "Submarine released capsule";
     }
 
@@ -26,3 +29,4 @@ public class Depth0 extends DepthState {
         return 0;
     }
 }
+

@@ -19,7 +19,8 @@ public class Depth1 extends DepthState {
     }
 
     @Override
-    public Object releaseCapsule(Nemo nemo) {
+    public String releaseCapsule(Nemo nemo) {
+        nemo.capsulesReleased++;
         return "Submarine released capsule";
     }
 

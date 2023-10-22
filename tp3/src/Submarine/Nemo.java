@@ -15,6 +15,8 @@ public class Nemo {
     public int coordinateX;
     public int coordinateY;
 
+    public int capsulesReleased = 0;
+
 
 
     public Nemo(int coordinateX, int coordinateY, Direction currentCardinalPoint) {
@@ -39,8 +41,8 @@ public class Nemo {
     public Direction getDirection() {
         return this.currentCardinalPoint;
     }
-    public ArrayList<DepthState> getDepth() {
-        return depthState;
+    public int getDepth() {
+        return depthState.get(depthState.size() - 1).getDepthState();
     }
 
     public void moveForward() {
