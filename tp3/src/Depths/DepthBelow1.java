@@ -1,15 +1,17 @@
+package Depths;
+
 import Submarine.Nemo;
 
-public class DepthBelowDepth1 extends Depths{
+public class DepthBelow1 extends DepthState {
 
     @Override
     public void up(Nemo nemo) {
-        nemo.depth++;
+        nemo.removeDepth();
     }
 
     @Override
     public void down(Nemo nemo) {
-        nemo.depth--;
+        nemo.setDepth(new DepthBelow1());
     }
 
     @Override

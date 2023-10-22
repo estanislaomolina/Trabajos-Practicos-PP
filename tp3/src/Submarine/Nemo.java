@@ -1,64 +1,60 @@
 package Submarine;
 
+import Depths.Depth0;
+import Depths.DepthState;
+import Depths.Depth0;
+import Position.Coordinates;
 import Position.Direction;
 
 import java.util.ArrayList;
 
 public class Nemo {
+    private  Coordinates currentCoordinates;
+    private Direction currentCardinalPoint;
+    private ArrayList<DepthState> depthState = new ArrayList<>();
     public int coordinateX;
     public int coordinateY;
-    public int depth;
-    public String cardinalPoint;
-    private Direction direction;
 
 
-    public Nemo(int coordinateX, int coordinateY, int depth, String cardinalPoint) {
-        this.coordinateX = coordinateX;
-        this.coordinateY = coordinateY;
-        this.depth = depth;
-        this.cardinalPoint = cardinalPoint;
-    }
 
-    public void commands (String command){
-        this.command = command;
+    public Nemo(int coordinateX, int coordinateY, int depth, Direction currentCardinalPoint) {
+        this.currentCoordinates = new Coordinates(coordinateX, coordinateY);
+        this.currentCardinalPoint = currentCardinalPoint;
+        depthState.add (new Depth0());
     }
-    public void move (String directions){
-        directions.
-                toLowerCase().
-                chars().
-                forEach(direction -> { 
-                    char directionChar = (char) direction; 
-                    Commands
-                            .commands
-                            .stream()
-                            .filter(command -> command.commandEquals(directionChar))
-                            .forEach(command -> command.runCommands(this));
-    }
-    public void up() {
-        this.depth++;
-    }
-
-    public void down() {
-        this.depth--;
-    }
-
-    public void rotateRight() {
-        direction = direction.rotateRight();
-    }
-
-    public void rotateLeft() {
-        direction = direction.rotateLeft();
+    public Coordinates getCoordinates() {
+        return this.currentCoordinates;
     }
 
     public void moveForward() {
-        direction.moveForward(this);
+        currentCardinalPoint.moveForward(this.getCoordinates());
+    }
+
+    public void down() {
+        depthState.get(depthState.size() - 1).down(this);
+    }
+
+    public void up() {
+        depthState.get(depthState.size() - 1).up(this);
+    }
+
+    public void rotateLeft() {
+        currentCardinalPoint = currentCardinalPoint.rotateLeft();
+    }
+
+    public void rotateRight() {
+        currentCardinalPoint = currentCardinalPoint.rotateRight();
     }
 
     public void releaseCapsule() {
-        direction.releaseCapsule(this);
+        depthState.get(depthState.size() - 1).releaseCapsule(this);
     }
 
-    public void addDepth(Depths depth) {
-        depths.add(depth);
+    public void setDepth(DepthState currentDepth) {
+        depthState.add(currentDepth);
+    }
+
+    public void removeDepth() {
+        depthState.remove(depthState.size() - 1);
     }
 }

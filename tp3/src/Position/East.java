@@ -1,7 +1,5 @@
 package Position;
 
-import Submarine.Nemo;
-
 public class East extends Direction{
     @Override
     public Direction rotateLeft() {
@@ -14,8 +12,11 @@ public class East extends Direction{
     }
 
     @Override
-    public void moveForward(Nemo nemo) {
-        Coordinates.coordinateX++;
-
+    public void moveForward(Coordinates nemo) {
+        nemo.getCoordinates().addCoordinates(new Coordinates(1, 0));
+    }
+    @Override
+    public String getDirection() {
+        return "East";
     }
 }

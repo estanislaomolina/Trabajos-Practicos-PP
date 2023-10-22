@@ -1,15 +1,16 @@
+package Depths;
+
 import Submarine.Nemo;
 
-public class DepthSurface extends Depths {
-
+public class Depth1 extends DepthState {
     @Override
     public void up(Nemo nemo) {
-        throw new RuntimeException("Invalid depth, cannot go up");
+        nemo.removeDepth();
     }
 
     @Override
     public void down(Nemo nemo) {
-        nemo.addDepth(new Depth1BelowSurface());
+        nemo.setDepth(new DepthBelow1());
     }
 
     @Override
