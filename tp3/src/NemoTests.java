@@ -1,3 +1,4 @@
+import Commands.Commands;
 import Depths.Depth0;
 import Depths.DepthState;
 import Position.Coordinates;
@@ -21,16 +22,20 @@ public class NemoTests {
     private DepthState initialDepth() { return new Depth0(); }
     private Coordinates initialCoordinates() { return new Coordinates(0,0); }
 
+
     @BeforeEach
     public void setUp() {
         nemo = new Nemo(initialCoordinates().getCoordinateX(), initialCoordinates().getCoordinateY(), north());
     }
 
     @Test public void test00InitialPosition() {
-        //nemo = new Nemo(0, 0, north());
         positionCheck(initialCoordinates(), north(), initialDepth());
     }
 
+    @Test public void test01DoNotMoveGivenAnEmptyListOfCommands() {
+        nemo.move("");
+        positionCheck(initialCoordinates(), north(), initialDepth());
+    }
     private void positionCheck(Coordinates initialCoordinates, Direction north, DepthState initialDepth) {
 
         assertEquals(0, initialCoordinates.getCoordinateX());
