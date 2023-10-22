@@ -3,8 +3,6 @@ package Position;
 public class Coordinates {
     int coordinateX;
     int coordinateY;
-    public int depth;
-    public String currentCardinalPoint;
 
     public Coordinates(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;

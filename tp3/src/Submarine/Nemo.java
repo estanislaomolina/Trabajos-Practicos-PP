@@ -2,11 +2,12 @@ package Submarine;
 
 import Depths.Depth0;
 import Depths.DepthState;
-import Depths.Depth0;
 import Position.Coordinates;
 import Position.Direction;
+import Commands.Commands;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Nemo {
     private  Coordinates currentCoordinates;
@@ -17,11 +18,17 @@ public class Nemo {
 
 
 
-    public Nemo(int coordinateX, int coordinateY, int depth, Direction currentCardinalPoint) {
+    public Nemo(int coordinateX, int coordinateY, Direction currentCardinalPoint) {
         this.currentCoordinates = new Coordinates(coordinateX, coordinateY);
         this.currentCardinalPoint = currentCardinalPoint;
         depthState.add (new Depth0());
     }
+
+    public void move (String command) {
+        Commands.getCommand(command).runCommands(this);
+    }
+
+
     public Coordinates getCoordinates() {
         return this.currentCoordinates;
     }

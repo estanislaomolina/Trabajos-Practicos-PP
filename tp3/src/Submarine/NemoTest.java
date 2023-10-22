@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import Submarine.Nemo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,14 +23,14 @@ public class NemoTest {
     ArrayList<Character> commands = new ArrayList<>();
 
     @ Test public void test00InitialPosition(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         assertEquals(initialCoordinateX, nemo.coordinateX);
         assertEquals(initialCoordinateY, nemo.coordinateY);
         assertEquals(initialDepth, nemo.depth);
         assertEquals(initialCardinalPoint, nemo.cardinalPoint);
     }
     @ Test public void test01DoNotMoveGivenAnEmptyListOfCommands(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         Assertions.assertTrue(newMovements().isEmpty());
         assertEquals(initialCoordinateX, nemo.coordinateX);
         assertEquals(initialCoordinateY, nemo.coordinateY);
@@ -39,39 +38,39 @@ public class NemoTest {
         assertEquals(initialCardinalPoint, nemo.cardinalPoint);
     }
     @ Test public void test02MoveOneUnitDown(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         commands.add('d');
         nemo.move(commands, newMovements());
         assertEquals(initialDepth -1, nemo.depth);
 
     }
     @ Test public void test03MoveOneUnitUp(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         nemo.depth = -1;
         commands.add('u');
         nemo.move(commands, newMovements());
         assertEquals(initialDepth, nemo.depth);
     }
     @ Test public void test04TurnLeft(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         commands.add('l');
         nemo.move(commands, newMovements());
         assertEquals("Position.West", nemo.cardinalPoint);
     }
     @ Test public void test05TurnRight(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         commands.add('r');
         nemo.move(commands, newMovements());
         assertEquals("Position.East", nemo.cardinalPoint);
     }
     @Test public void test06MoveOneUnitForward(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         commands.add('f');
         nemo.move(commands, newMovements());
         assertEquals(initialCoordinateY +1, nemo.coordinateY);
     }
     @Test public void test07ReleaseCapsule(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         commands.add('m');
         nemo.move(commands, newMovements());
 
@@ -96,7 +95,7 @@ public class NemoTest {
         }
     }
     @Test public void test08InvalidCommandShouldNotAffectItsPosition(){
-        Nemo nemo = new Nemo (initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo (initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         commands.add('x');
         try {
             nemo.move(commands, newMovements());
@@ -110,7 +109,7 @@ public class NemoTest {
         assertEquals(initialCardinalPoint, nemo.cardinalPoint);
     }
     @Test public void test09DepthCannotBeGreaterThan0(){
-        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialDepth, initialCardinalPoint);
+        Nemo nemo = new Nemo(initialCoordinateX, initialCoordinateY, initialCardinalPoint);
         try {
             commands.add('u');
             nemo.move(commands, newMovements());
