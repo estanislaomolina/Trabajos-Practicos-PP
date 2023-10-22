@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Nemo {
     private  Coordinates currentCoordinates;
-    private Direction currentCardinalPoint;
+    public Direction currentCardinalPoint;
     private ArrayList<DepthState> depthState = new ArrayList<>();
     public int coordinateX;
     public int coordinateY;
