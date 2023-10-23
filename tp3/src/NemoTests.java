@@ -79,8 +79,6 @@ public class NemoTests {
     }
 
     @Test public void test08ReleaseCapsule() {
-        //nemo.move("m");
-        /*assertEquals( 1,nemo.capsulesReleased );*/
         depthCheck("m", 0, 0);
     }
 
