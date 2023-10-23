@@ -79,30 +79,30 @@ public class NemoTests {
     }
 
     @Test public void test08ReleaseCapsule() {
-        depthCheck("m", 0, 0);
+        nemo.move("m");
+        assertEquals( 1,nemo.capsulesReleased );
     }
 
-    @Test public void test09ReleaseCapsuleInDepth0() {
-        capsuleDoesNotAffectPositionCheck("m", 0, 0);
-    }
-    @Test public void test10ReleaseCapsuleInDepth1() {
-        capsuleDoesNotAffectPositionCheck("dm", 0, -1);
+    @Test public void test09ReleaseCapsuleInDepth1() {
+        nemo.move("d");
+        nemo.move("m");
+        assertEquals( 1,nemo.capsulesReleased );
     }
 
-    @Test public void test11DoNotReleaseCapsuleInDepthBelow1() {
+    @Test public void test10DoNotReleaseCapsuleInDepthBelow1() {
         nemo.move("d");
         nemo.move("d");
         nemo.move("m");
         assertEquals( 0,nemo.capsulesReleased );
     }
-    @Test public void test12MoveForwardMoreThanOneTimeInSameCommand() {
+    @Test public void test11MoveForwardMoreThanOneTimeInSameCommand() {
         nemo.move("ff");
         assertEquals(0, nemo.getCoordinates().getCoordinateX());
         assertEquals(2, nemo.getCoordinates().getCoordinateY());
         assertEquals(north().getDirection(), nemo.currentCardinalPoint.getDirection());
     }
 
-    @Test public void test13MoveForwardMoreThanOneTimeInDifferentCommands() {
+    @Test public void test12MoveForwardMoreThanOneTimeInDifferentCommands() {
         nemo.move("f");
         nemo.move("f");
         assertEquals(0, nemo.getCoordinates().getCoordinateX());
@@ -110,14 +110,14 @@ public class NemoTests {
         assertEquals(north().getDirection(), nemo.currentCardinalPoint.getDirection());
     }
 
-    @Test public void test14MoveAndTurnInSameCommand() {
+    @Test public void test13MoveAndTurnInSameCommand() {
         nemo.move("fr");
         assertEquals(0, nemo.getCoordinates().getCoordinateX());
         assertEquals(1, nemo.getCoordinates().getCoordinateY());
         assertEquals(east().getDirection(), nemo.currentCardinalPoint.getDirection());
     }
 
-    @Test public void test15MoveAndTurnInDifferentCommands() {
+    @Test public void test14MoveAndTurnInDifferentCommands() {
         nemo.move("f");
         nemo.move("r");
         assertEquals(0, nemo.getCoordinates().getCoordinateX());
@@ -125,43 +125,30 @@ public class NemoTests {
         assertEquals(east().getDirection(), nemo.currentCardinalPoint.getDirection());
     }
 
-    @Test public void test16MoveAndTurnAndMoveInSameCommand() {
+    @Test public void test15MoveAndTurnAndMoveInSameCommand() {
         nemo.move("frf");
         assertEquals(1, nemo.getCoordinates().getCoordinateX());
         assertEquals(1, nemo.getCoordinates().getCoordinateY());
         assertEquals(east().getDirection(), nemo.currentCardinalPoint.getDirection());
     }
 
-    @Test public void test17MoveDownAndDropCapsuleInSameCommand() {
+    @Test public void test16MoveDownAndDropCapsuleInSameCommand() {
         nemo.move("dm");
         assertEquals(-1, nemo.getDepth());
         assertEquals(1, nemo.capsulesReleased);
     }
 
-    @Test public void test18MoveDownAndDropCapsuleInSameCommandBelowDepth01() {
+    @Test public void test17MoveDownAndDropCapsuleInSameCommandBelowDepth1() {
         nemo.move("ddm");
         assertEquals(-2, nemo.getDepth());
         assertEquals(0, nemo.capsulesReleased);
     }
-
-
+    
     private void positionCheck(Coordinates initialCoordinates, Direction direction, DepthState initialDepth) {
         assertEquals(0, initialCoordinates.getCoordinateX());
         assertEquals(0, initialCoordinates.getCoordinateY());
         assertEquals(direction.getDirection(), nemo.currentCardinalPoint.getDirection());
         assertEquals(0, initialDepth.getDepthState());
-
-    }
-    private void depthCheck(String command, int depth, int expectedDepth) {
-        assertEquals(depth, nemo.getDepth());
-        nemo.move( command );
-        assertEquals(expectedDepth, nemo.getDepth());
-    }
-
-    private void capsuleDoesNotAffectPositionCheck(String command, int depth, int expectedDepth) {
-        positionCheck(initialCoordinates(), north(), initialDepth());
-        nemo.move( command );
-        positionCheck(initialCoordinates(), north(), initialDepth());
     }
 
 }
