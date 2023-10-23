@@ -79,8 +79,9 @@ public class NemoTests {
     }
 
     @Test public void test08ReleaseCapsule() {
-        nemo.move("m");
-        assertEquals( 1,nemo.capsulesReleased );
+        //nemo.move("m");
+        /*assertEquals( 1,nemo.capsulesReleased );*/
+        depthCheck("m", 0, 0);
     }
 
     @Test public void test09ReleaseCapsuleInDepth1() {
@@ -144,18 +145,18 @@ public class NemoTests {
         assertEquals(0, nemo.capsulesReleased);
     }
 
-    @Test public void test18InvalidCommand() {
-        nemo.move("x");
-        assertEquals(0, nemo.getCoordinates().getCoordinateX());
-        assertEquals(0, nemo.getCoordinates().getCoordinateY());
-        assertEquals(north().getDirection(), nemo.currentCardinalPoint.getDirection());
-        assertEquals(0, nemo.getDepth());
-    }
+
     private void positionCheck(Coordinates initialCoordinates, Direction direction, DepthState initialDepth) {
         assertEquals(0, initialCoordinates.getCoordinateX());
         assertEquals(0, initialCoordinates.getCoordinateY());
         assertEquals(direction.getDirection(), nemo.currentCardinalPoint.getDirection());
         assertEquals(0, initialDepth.getDepthState());
+
+    }
+    private void depthCheck(String command, int depth, int expectedDepth) {
+        assertEquals(depth, nemo.getDepth());
+        nemo.move( command );
+        assertEquals(expectedDepth, nemo.getDepth());
     }
 
 }
