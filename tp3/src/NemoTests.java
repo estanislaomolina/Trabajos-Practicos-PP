@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 
 public class NemoTests {
@@ -90,10 +91,7 @@ public class NemoTests {
     }
 
     @Test public void test10DoNotReleaseCapsuleInDepthBelow1() {
-        nemo.move("d");
-        nemo.move("d");
-        nemo.move("m");
-        assertEquals( 0,nemo.capsulesReleased );
+        nemoExplodedCheck("ddm");
     }
     @Test public void test11MoveForwardMoreThanOneTimeInSameCommand() {
         nemo.move("ff");
@@ -138,17 +136,14 @@ public class NemoTests {
         assertEquals(1, nemo.capsulesReleased);
     }
 
-    @Test public void test17MoveDownAndDropCapsuleInSameCommandBelowDepth1() {
-        nemo.move("ddm");
-        assertEquals(-2, nemo.getDepth());
-        assertEquals(0, nemo.capsulesReleased);
-    }
-    
     private void positionCheck(Coordinates initialCoordinates, Direction direction, DepthState initialDepth) {
         assertEquals(0, initialCoordinates.getCoordinateX());
         assertEquals(0, initialCoordinates.getCoordinateY());
         assertEquals(direction.getDirection(), nemo.currentCardinalPoint.getDirection());
         assertEquals(0, initialDepth.getDepthState());
     }
-
+    private void nemoExplodedCheck(String commands) {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> nemo.move(commands));
+        assertEquals(exception.getMessage(), "Submarine destroyed due to excess chocolate.");
+    }
 }

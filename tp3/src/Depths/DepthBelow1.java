@@ -19,7 +19,7 @@ public class DepthBelow1 extends DepthState {
 
     @Override
     public String releaseCapsule(Nemo nemo) {
-        return ("Submarine destroyed due to excess chocolate.");
+        throw new RuntimeException("Submarine destroyed due to excess chocolate.");
     }
 
     @Override
