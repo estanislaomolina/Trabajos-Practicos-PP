@@ -75,6 +75,19 @@ public class GameTest {
 
         assertFalse(game.finished());
     }
+    @Test
+    public void test08CantKeepPlayingAfterGameFinished(){
+        Linea game = new Linea( 5, 5, 'A' );
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+
+        assertThrowsLike( () -> game.playBlueAt( 2 ), Linea.gameFinishedErrorMessage );
+    }
 
     private void assertThrowsLike(Executable executable, String message ) {
         Assertions.assertEquals( message, assertThrows( Exception.class, executable ).getMessage() );

@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class Linea {
     public static final String NotItsTurnErrorMessage = "No es su turno";
     public static final String fullColumnErrorMessage = "Columna llena";
-    public static final char RedPlayerSymbol = 'R';
-    public static final int BluePlayerSymbol = 'B';
+    public static final char RedPlayerSymbol = 'O';
+    public static final char BluePlayerSymbol = 'X';
+    public static final String gameFinishedErrorMessage = "Juego terminado";
     ArrayList<ArrayList> board;
     int maxHight;
     char gameMode;
 
     boolean turnoRojo = true;
     boolean turnoAzul = false;
-    //quiero crear una variable donde pueda guardar como int la ultima jugada como columna y fila
     int lastPlayedColumn;
     int lastPlayedRow;
     public Linea(int prompt, int prompt1, char mode) {
@@ -31,23 +31,43 @@ public class Linea {
     }
 
     public boolean show() {
-    return false;
 
+        for (int i = maxHight-1; i >= 0; i--) {
+            for (int j = 0; j < board.size(); j++) {
+                if (board.get(j).size() > i) {
+                    System.out.print("|" + board.get(j).get(i));
+                }
+                else {
+                    System.out.print("| ");
+                }
+            }
+            System.out.println("|");
+        }
+        for (int i = 0; i < board.size(); i++) {
+            System.out.print("|" + i);
+        }
+        System.out.println("|");
+        return true;
     }
+
     public boolean finished() {
+        //return true in gamemode A if there are 4 in a row vertically or horizontally
         if (gameMode == 'A') {
-            Object player = board.get(lastPlayedColumn).get(lastPlayedRow);
-            if (board.get(lastPlayedColumn).size() > 3) {
-                if (player == board.get(lastPlayedColumn).get(lastPlayedRow - 1)
-                        && player == board.get(lastPlayedColumn).get(lastPlayedRow - 2)
-                        && player == board.get(lastPlayedColumn).get(lastPlayedRow - 3)) {
+            if (board.get(lastPlayedColumn).size() >= 4) {
+                if (board.get(lastPlayedColumn).get(lastPlayedRow).equals(board.get(lastPlayedColumn).get(lastPlayedRow-1)) &&
+                        board.get(lastPlayedColumn).get(lastPlayedRow).equals(board.get(lastPlayedColumn).get(lastPlayedRow-2)) &&
+                        board.get(lastPlayedColumn).get(lastPlayedRow).equals(board.get(lastPlayedColumn).get(lastPlayedRow-3))) {
                     return true;
                 }
             }
+
         }
         return false;
     }
     public void playRedAt(int column) {
+        if (finished()) {
+            throw new RuntimeException(gameFinishedErrorMessage);
+        }
         if (!turnoRojo) {
             throw new RuntimeException(NotItsTurnErrorMessage);
         }
@@ -65,6 +85,9 @@ public class Linea {
 
 
     public void playBlueAt(int column) {
+        if (finished()) {
+            throw new RuntimeException(gameFinishedErrorMessage);
+        }
         if (!turnoAzul) {
             throw new RuntimeException(NotItsTurnErrorMessage);
         }
