@@ -1,7 +1,6 @@
 package linea;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,8 +92,8 @@ public class Linea {
 
     public Boolean horizontalFinish() {
         if (lastPlayedRow != -1) {
-            List<Boolean> matchingList = getBoardContent(lastPlayedRow).stream()
-                    .map(cell -> cell.equals(getBoardContent(lastPlayedRow).get(lastPlayedColumn)))
+            List<Boolean> matchingList = getRowContent(lastPlayedRow).stream()
+                    .map(cell -> cell.equals(getRowContent(lastPlayedRow).get(lastPlayedColumn)))
                     .collect(Collectors.toList());
 
             if (Collections.frequency(matchingList, true) >= 4) {
@@ -157,8 +156,7 @@ public class Linea {
                     .forEach(mode -> this.gameMode = mode);
         }
 
-        public ArrayList<Character> getBoardContent(int row){
-            //necesito que la funcion me devuelva un array col los valores que estan en cada columna de la fila que le paso
+        public ArrayList<Character> getRowContent(int row){
             ArrayList<Character> boardContent = new ArrayList<>();
             for (int i = 0; i < board.size(); i++) {
                 if (board.get(i).size()-1 >= row && !board.get(i).isEmpty()) {
