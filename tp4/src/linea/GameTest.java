@@ -85,8 +85,40 @@ public class GameTest {
         game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
+        game.finished();
 
         assertThrowsLike( () -> game.playBlueAt( 2 ), Linea.gameFinishedErrorMessage );
+    }
+    @Test
+    public void test09ModeAFinishesHorizontally(){
+        Linea game = new Linea( 5, 5, 'A' );
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        game.playRedAt(2);
+        game.playBlueAt(2);
+        game.playRedAt(3);
+        game.playBlueAt(3);
+        game.playRedAt(4);
+
+        assertTrue(game.finished());
+    }
+
+    @Test
+    public void test10ModeBFinishesDiagonally(){
+        Linea game = new Linea( 6, 6, 'B' );
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(2);
+        game.playBlueAt(3);
+        game.playRedAt(3);
+        game.playBlueAt(4);
+        game.playRedAt(3);
+        game.playBlueAt(4);
+        game.playRedAt(4);
+        game.playBlueAt(5);
+        game.playRedAt(4);
+
+        assertTrue(game.finished());
     }
 
     private void assertThrowsLike(Executable executable, String message ) {

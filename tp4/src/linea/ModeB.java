@@ -4,7 +4,7 @@ public class ModeB extends GameMode{
 
     @Override
     public Boolean isGameOver(Linea linea) {
-        return linea.verticalFinish() && linea.horizontalFinish();
+        return linea.diagonalFinish();
     }
 
     @Override
