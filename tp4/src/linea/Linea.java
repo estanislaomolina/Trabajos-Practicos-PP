@@ -11,26 +11,24 @@ public class Linea {
     public static final String gameFinishedErrorMessage = "Juego terminado";
     ArrayList<ArrayList> board;
     int maxHight;
-    char gameMode;
+    GameMode gameMode;
 
     boolean turnoRojo = true;
     boolean turnoAzul = false;
     int lastPlayedColumn;
     int lastPlayedRow;
+    ArrayList <GameMode> gameModeList = new ArrayList<>();
 
     public Linea(int prompt, int prompt1, char mode) {
         board = new ArrayList<>();
-        gameMode = mode;
         maxHight = prompt1;
+        chooseMode(mode);
         for (int i = 0; i < prompt; i++) {
             ArrayList<Integer> column = new ArrayList<>();
             board.add(column);
         }
     }
 
-    public char mode() {
-        return gameMode;
-    }
 
     public boolean show() {
 
@@ -53,14 +51,8 @@ public class Linea {
 
 
     public boolean finished() {
-        if (gameMode == 'A') {
-            if (verticalFinish()) {
-                return true;
-            }
-        }
-        return false;
+        return gameMode.isGameOver(this);
     }
-
     //return true in gamemode A if there are 4 in a row vertically or horizontally
 //        if (gameMode == 'A') {
 //            if (board.get(lastPlayedColumn).size() >= 4) {
@@ -145,4 +137,20 @@ public class Linea {
     public Boolean horizontalFinish() {
         return false;
     }
+
+
+    public void chooseMode(char modeChar) {
+        gameModeList.add(new ModeA());
+        gameModeList.add(new ModeB());
+        gameModeList.add(new ModeC());
+        
+        gameModeList.stream()
+                .filter(mode -> mode.getModeChar() == modeChar)
+                .forEach(mode -> this.gameMode = mode);
     }
+
+
+    public char mode() {
+        return gameMode.getModeChar();
+    }
+}
