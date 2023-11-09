@@ -7,15 +7,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Linea {
-    public static final String NotItsTurnErrorMessage = "No es su turno";
+    public static final String notItsTurnErrorMessage = "No es su turno";
     public static final String fullColumnErrorMessage = "Columna llena";
-    public static final char RedPlayerSymbol = 'O';
-    public static final char BluePlayerSymbol = 'X';
+    public static final String outOfBoundsErrorMessage = "Columna fuera de rango";
+    public static final char redPlayerSymbol = 'O';
+    public static final char bluePlayerSymbol = 'X';
     public static final String gameFinishedErrorMessage = "Juego terminado";
     static ArrayList<ArrayList> board;
     int columnas;
     int filas;
-    int maxHight;
+    int maxHeight;
     GameMode gameMode;
     Turnos turno = new TurnoRojo();
     int lastPlayedColumn;
@@ -24,7 +25,7 @@ public class Linea {
 
     public Linea(int prompt, int prompt1, char mode) {
         board = new ArrayList<>();
-        maxHight = prompt1;
+        maxHeight = prompt1;
         filas = prompt1;
         columnas = prompt;
         chooseMode(mode);
@@ -37,7 +38,7 @@ public class Linea {
 
     public boolean show() {
 
-        for (int i = maxHight - 1; i >= 0; i--) {
+        for (int i = maxHeight - 1; i >= 0; i--) {
             for (int j = 0; j < board.size(); j++) {
                 if (board.get(j).size() > i) {
                     System.out.print("|" + board.get(j).get(i));
@@ -149,7 +150,7 @@ public class Linea {
 
 
     private boolean isValidPosition(int column, int row) {
-        return column >= 0 && column < columnas && row >= 0 && row < maxHight;
+        return column >= 0 && column < columnas && row >= 0 && row < maxHeight;
     }
 
 

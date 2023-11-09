@@ -25,19 +25,19 @@ public class GameTest {
     public void test02ChipIsPlacedCorrectlyInBoard() {
         Linea game = new Linea( 3, 3, 'C' );
         game.playRedAt(1);
-        assertEquals( Linea.RedPlayerSymbol, game.board.get( 1 ).get( 0) );
+        assertEquals( Linea.redPlayerSymbol, game.board.get( 1 ).get( 0) );
     }
 
     @Test
     public void test03BlueCantPlayFirst() {
         Linea game = new Linea( 3, 3, 'C' );
-        assertThrowsLike( () -> game.playBlueAt( 1 ), Linea.NotItsTurnErrorMessage );
+        assertThrowsLike( () -> game.playBlueAt( 1 ), Linea.notItsTurnErrorMessage);
     }
     @Test
     public void test04CantPlayIfNotItsTurn() {
         Linea game = new Linea(3, 3, 'C');
         game.playRedAt(1);
-        assertThrowsLike(() -> game.playRedAt(2), Linea.NotItsTurnErrorMessage);
+        assertThrowsLike(() -> game.playRedAt(2), Linea.notItsTurnErrorMessage);
     }
 
     @Test
@@ -119,6 +119,11 @@ public class GameTest {
         game.playRedAt(4);
 
         assertTrue(game.finished());
+    }
+    @Test
+    public void test11CantPlayOutOfBounds(){
+        Linea game = new Linea( 3, 3, 'C' );
+        assertThrowsLike( () -> game.playRedAt( 3 ), Linea.outOfBoundsErrorMessage );
     }
 
     private void assertThrowsLike(Executable executable, String message ) {
