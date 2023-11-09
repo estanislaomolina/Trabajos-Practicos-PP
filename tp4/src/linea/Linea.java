@@ -105,46 +105,53 @@ public class Linea {
     }
 
 
-
     public Boolean diagonalFinish() {
-        char player = (char) board.get(lastPlayedRow).get(lastPlayedColumn);
-            for (int col = 0; col < columnas; col++) {
-                for (int row = 0; row <  filas; row++) {
-                    if (board.get(col).size() > row &&
-                            board.get(col + 1).size() > row + 1 &&
-                            board.get(col + 2).size() > row + 2 &&
-                            board.get(col + 3).size() > row + 3) {
-                        char c1 = (char) board.get(col).get(row);
-                        char c2 = (char) board.get(col + 1).get(row + 1);
-                        char c3 = (char) board.get(col + 2).get(row + 2);
-                        char c4 = (char) board.get(col + 3).get(row + 3);
-                        if (c1 == player && c2 == player && c3 == player && c4 == player) {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            // Verificar diagonales ascendentes
-            for (int col = 0; col < columnas; col++) {
-                for (int row = 3; row < filas; row++) {
-                    if (board.get(col).size() > row &&
-                            board.get(col + 1).size() > row - 1 &&
-                            board.get(col + 2).size() > row - 2 &&
-                            board.get(col + 3).size() > row - 3) {
-                        char c1 = (char) board.get(col).get(row);
-                        char c2 = (char) board.get(col + 1).get(row - 1);
-                        char c3 = (char) board.get(col + 2).get(row - 2);
-                        char c4 = (char) board.get(col + 3).get(row - 3);
-                        if (c1 == player && c2 == player && c3 == player && c4 == player) {
-                            return true;
-                        }
-                    }
-                }
-            }
-
+        if (lastPlayedRow == -1) {
             return false;
         }
+
+        char playerSymbol = board.get(lastPlayedColumn).get(lastPlayedRow).toString().charAt(0);
+
+
+        int count1 = 0;
+        for (int i = -3; i <= 3; i++) {
+            int col = lastPlayedColumn + i;
+            int row = lastPlayedRow + i;
+            if (isValidPosition(col, row) && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
+                count1++;
+                if (count1 >= 4) {
+                    turno = new JuegoTerminado();
+                    return true;
+                }
+            } else {
+                count1 = 0;
+            }
+        }
+
+        // Check diagonals that go from bottom-right to top-left
+        int count2 = 0;
+        for (int i = -3; i <= 3; i++) {
+            int col = lastPlayedColumn + i;
+            int row = lastPlayedRow - i;
+            if (isValidPosition(col, row) && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
+                count2++;
+                if (count2 >= 4) {
+                    turno = new JuegoTerminado();
+                    return true;
+                }
+            } else {
+                count2 = 0;
+            }
+        }
+
+        return false;
+    }
+
+
+    private boolean isValidPosition(int column, int row) {
+        return column >= 0 && column < columnas && row >= 0 && row < maxHight;
+    }
+
 
         public void chooseMode ( char modeChar){
             gameModeList.add(new ModeA());

@@ -115,7 +115,7 @@ public class GameTest {
         game.playRedAt(3);
         game.playBlueAt(4);
         game.playRedAt(4);
-        game.playBlueAt(5);
+        game.playBlueAt(3);
         game.playRedAt(4);
 
         assertTrue(game.finished());
