@@ -125,7 +125,6 @@ public class GameTest {
         Linea game = new Linea( 3, 3, 'C' );
         assertThrowsLike( () -> game.playRedAt( 3 ), Linea.outOfBoundsErrorMessage );
     }
-
     private void assertThrowsLike(Executable executable, String message ) {
         Assertions.assertEquals( message, assertThrows( Exception.class, executable ).getMessage() );
     }

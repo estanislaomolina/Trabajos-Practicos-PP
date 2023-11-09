@@ -1,5 +1,7 @@
 package linea;
 
+import java.util.ArrayList;
+
 import static linea.Linea.*;
 
 public class TurnoRojo extends Turnos {
@@ -16,6 +18,7 @@ public class TurnoRojo extends Turnos {
         linea.board.get(column).add(redPlayerSymbol);
         linea.turno = new TurnoAzul();
     }
+
 
     @Override
     public void playBlueAt(Linea linea, int column) {

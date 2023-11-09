@@ -10,6 +10,7 @@ public class Linea {
     public static final String notItsTurnErrorMessage = "No es su turno";
     public static final String fullColumnErrorMessage = "Columna llena";
     public static final String outOfBoundsErrorMessage = "Columna fuera de rango";
+    public static final String invalidCharacterErrorMessage = "Caracter invalido";
     public static final char redPlayerSymbol = 'O';
     public static final char bluePlayerSymbol = 'X';
     public static final String gameFinishedErrorMessage = "Juego terminado";
@@ -107,18 +108,17 @@ public class Linea {
 
 
     public Boolean diagonalFinish() {
-        if (lastPlayedRow == -1) {
+        if (lastPlayedRow == -1 || lastPlayedColumn < 0 || lastPlayedColumn >= board.size()) {
             return false;
         }
 
         char playerSymbol = board.get(lastPlayedColumn).get(lastPlayedRow).toString().charAt(0);
 
-
         int count1 = 0;
         for (int i = -3; i <= 3; i++) {
             int col = lastPlayedColumn + i;
             int row = lastPlayedRow + i;
-            if (isValidPosition(col, row) && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
+            if (isValidPosition(col, row) && board.get(col).size() > row && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
                 count1++;
                 if (count1 >= 4) {
                     turno = new JuegoTerminado();
@@ -134,7 +134,7 @@ public class Linea {
         for (int i = -3; i <= 3; i++) {
             int col = lastPlayedColumn + i;
             int row = lastPlayedRow - i;
-            if (isValidPosition(col, row) && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
+            if (isValidPosition(col, row) && row >= 0 && board.get(col).size() > row && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
                 count2++;
                 if (count2 >= 4) {
                     turno = new JuegoTerminado();
@@ -147,6 +147,7 @@ public class Linea {
 
         return false;
     }
+
 
 
     private boolean isValidPosition(int column, int row) {
