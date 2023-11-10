@@ -253,6 +253,21 @@ public class GameTest {
         assertThrowsLike(() -> linea5x5modeC.playBlueAt(2), Linea.gameFinishedErrorMessage);
     }
 
+    @Test
+    public void test35ModeAFinishesTied() {
+        tiedBoard(linea5x5modeA);
+        assertTrue(linea5x5modeA.finished());
+    }
+    @Test
+    public void test36ModeBFinishesTied() {
+        tiedBoard(linea5x5modeB);
+        assertTrue(linea5x5modeB.finished());
+    }
+    @Test
+    public void test37ModeCFinishesTied() {
+        tiedBoard(linea5x5modeC);
+        assertTrue(linea5x5modeC.finished());
+    }
 
     private void assertThrowsLike(Executable executable, String message) {
         Assertions.assertEquals(message, assertThrows(Exception.class, executable).getMessage());
@@ -290,5 +305,32 @@ public class GameTest {
         linea.playRedAt(4);
         linea.playBlueAt(1);
         linea.playRedAt(4);
+    }
+    private void tiedBoard(Linea linea){
+        linea.playRedAt(1);
+        linea.playBlueAt(2);
+        linea.playRedAt(3);
+        linea.playBlueAt(4);
+        linea.playRedAt(5);
+        linea.playBlueAt(2);
+        linea.playRedAt(1);
+        linea.playBlueAt(4);
+        linea.playRedAt(3);
+        linea.playBlueAt(2);
+        linea.playRedAt(5);
+        linea.playBlueAt(4);
+        linea.playRedAt(1);
+        linea.playBlueAt(1);
+        linea.playRedAt(3);
+        linea.playBlueAt(1);
+        linea.playRedAt(2);
+        linea.playBlueAt(3);
+        linea.playRedAt(4);
+        linea.playBlueAt(5);
+        linea.playRedAt(5);
+        linea.playBlueAt(2);
+        linea.playRedAt(3);
+        linea.playBlueAt(4);
+        linea.playRedAt(5);
     }
 }

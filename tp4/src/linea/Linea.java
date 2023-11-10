@@ -70,7 +70,7 @@ public class Linea {
 
 
     public boolean finished() {
-        return gameMode.isGameOver(this);
+        return gameMode.isGameOver(this) || isFull();
     }
 
     public char mode() {
@@ -100,9 +100,13 @@ public class Linea {
 
     public Boolean verticalFinish() {
         if (board.stream()
-                .filter(column -> column.size() >= 4)
+                .filter(column -> column.size() >= 4 && column.size() == lastPlayedRow+1) // solo voy a poder hacer un match en la ultima row que jugue
                 .anyMatch(column -> IntStream.range(0, 4)
-                        .allMatch(i -> column.get(lastPlayedRow - i).equals(column.get(lastPlayedRow))))){
+                        .allMatch(i -> column.get(lastPlayedRow - i)
+                                .equals(column.get(lastPlayedRow))
+                        )
+                )
+        ){
             turno = new JuegoTerminado();
             return true;
         }
@@ -184,4 +188,8 @@ public class Linea {
             return boardContent;
         }
 
+    public Boolean isFull() {
+        return board.stream()
+                .allMatch(column -> column.size() == maxHeight);
+    }
 }

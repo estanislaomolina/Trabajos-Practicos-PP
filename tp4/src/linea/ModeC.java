@@ -7,6 +7,11 @@ public class ModeC extends GameMode{
     }
 
     @Override
+    public Boolean isTie(Linea linea) {
+        return linea.isFull();
+    }
+
+    @Override
     public char getModeChar() {
         return 'C';
     }
