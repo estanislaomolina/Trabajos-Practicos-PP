@@ -10,9 +10,7 @@ public class Linea {
     public static final String notItsTurnErrorMessage = "No es su turno";
     public static final String fullColumnErrorMessage = "Columna llena";
     public static final String outOfBoundsErrorMessage = "Columna fuera de rango";
-    public static final String invalidCharacterErrorMessage = "Caracter invalido";
-    public static final char redPlayerSymbol = 'O';
-    public static final char bluePlayerSymbol = 'X';
+
     public static final String gameFinishedErrorMessage = "Juego terminado";
     static ArrayList<ArrayList> board;
     int columnas;
@@ -36,23 +34,37 @@ public class Linea {
         }
     }
 
-
     public boolean show() {
 
         for (int i = maxHeight - 1; i >= 0; i--) {
+            System.out.print("║");
             for (int j = 0; j < board.size(); j++) {
                 if (board.get(j).size() > i) {
-                    System.out.print("|" + board.get(j).get(i));
+                    System.out.print(" " + board.get(j).get(i));
                 } else {
-                    System.out.print("| ");
+                    System.out.print(" .");
                 }
             }
-            System.out.println("|");
+            System.out.println(" ║");
         }
+        System.out.print("║");
         for (int i = 0; i < board.size(); i++) {
-            System.out.print("|" + i);
+            System.out.print("--");
         }
-        System.out.println("|");
+        System.out.println("-║");
+
+        System.out.print("║");
+        for (int i = 0; i < board.size(); i++) {
+            System.out.print(" " + ((i+1)%10));
+        }
+        System.out.println(" ║");
+
+        System.out.print("╚");
+        for (int i = 0; i < board.size(); i++) {
+            System.out.print("══");
+        }
+        System.out.println("═╝");
+
         return true;
     }
 
@@ -66,19 +78,25 @@ public class Linea {
     }
 
     public void playRedAt(int column) {
-
-            turno.playRedAt(this, column);
-            lastPlayedColumn = column;
-            lastPlayedRow = board.get(column).size() - 1;
+            turno.playRedAt(this, column -1);
         }
 
     public void playBlueAt(int column) {
-            turno.playBlueAt(this, column);
-            lastPlayedColumn = column;
-            lastPlayedRow = board.get(column).size() - 1;
+            turno.playBlueAt(this, column-1);
         }
 
+    public void placeChip(int column, char playerSymbol) {
+        if (column < 0 || column >= board.size()) {
+            throw new RuntimeException(outOfBoundsErrorMessage);
+        }
+        if (board.get(column).size() == maxHeight) {
+            throw new RuntimeException(fullColumnErrorMessage);
+        }
+        board.get(column).add(playerSymbol);
+        lastPlayedColumn = column;
+        lastPlayedRow = board.get(column).size() - 1;
 
+    }
 
     public Boolean verticalFinish() {
         if (board.stream()
@@ -91,16 +109,18 @@ public class Linea {
         return false;
     }
 
-
     public Boolean horizontalFinish() {
+        int count = 0;
         if (lastPlayedRow != -1) {
-            List<Boolean> matchingList = getRowContent(lastPlayedRow).stream()
-                    .map(cell -> cell.equals(getRowContent(lastPlayedRow).get(lastPlayedColumn)))
-                    .collect(Collectors.toList());
-
-            if (Collections.frequency(matchingList, true) >= 4) {
-                turno = new JuegoTerminado();
-                return true;
+            for (int i = 0; i < getRowContent(lastPlayedRow).size(); i++) {
+                if (getRowContent(lastPlayedRow).get(i).equals(getRowContent(lastPlayedRow).get(lastPlayedColumn))) {
+                    count++;
+                } else {
+                    count = 0;
+                }
+                if (count == 4) {
+                    return true;
+                }
             }
         }
         return false;
@@ -114,46 +134,33 @@ public class Linea {
 
         char playerSymbol = board.get(lastPlayedColumn).get(lastPlayedRow).toString().charAt(0);
 
-        int count1 = 0;
-        for (int i = -3; i <= 3; i++) {
-            int col = lastPlayedColumn + i;
-            int row = lastPlayedRow + i;
-            if (isValidPosition(col, row) && board.get(col).size() > row && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
-                count1++;
-                if (count1 >= 4) {
-                    turno = new JuegoTerminado();
-                    return true;
-                }
-            } else {
-                count1 = 0;
-            }
-        }
+        long count1 = IntStream.rangeClosed(-3, 3)
+                .filter(i -> {
+                    int col = lastPlayedColumn + i;
+                    int row = lastPlayedRow + i;
+                    return isValidPosition(col, row) && board.get(col).size() > row && board.get(col).get(row).toString().charAt(0) == playerSymbol;
+                })
+                .count();
 
-        // Check diagonals that go from bottom-right to top-left
-        int count2 = 0;
-        for (int i = -3; i <= 3; i++) {
-            int col = lastPlayedColumn + i;
-            int row = lastPlayedRow - i;
-            if (isValidPosition(col, row) && row >= 0 && board.get(col).size() > row && board.get(col).get(row).toString().charAt(0) == playerSymbol) {
-                count2++;
-                if (count2 >= 4) {
-                    turno = new JuegoTerminado();
-                    return true;
-                }
-            } else {
-                count2 = 0;
-            }
+        long count2 = IntStream.rangeClosed(-3, 3)
+                .filter(i -> {
+                    int col = lastPlayedColumn + i;
+                    int row = lastPlayedRow - i;
+                    return isValidPosition(col, row) && row >= 0 && board.get(col).size() > row && board.get(col).get(row).toString().charAt(0) == playerSymbol;
+                })
+                .count();
+
+        if (count1 >= 4 || count2 >= 4) {
+            turno = new JuegoTerminado();
+            return true;
         }
 
         return false;
     }
 
-
-
     private boolean isValidPosition(int column, int row) {
         return column >= 0 && column < columnas && row >= 0 && row < maxHeight;
     }
-
 
         public void chooseMode ( char modeChar){
             gameModeList.add(new ModeA());

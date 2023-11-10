@@ -4,18 +4,12 @@ import java.util.ArrayList;
 
 import static linea.Linea.*;
 
+
 public class TurnoRojo extends Turnos {
+    public static final char redPlayerSymbol = 'O';
     @Override
     public void playRedAt(Linea linea, int column) {
-        if (column < 0 || column >= Linea.board.size()) {
-            throw new RuntimeException(outOfBoundsErrorMessage);
-        }
-
-        if (Linea.board.get(column).size() == linea.maxHeight) {
-            throw new RuntimeException(fullColumnErrorMessage);
-        }
-
-        linea.board.get(column).add(redPlayerSymbol);
+        linea.placeChip(column, redPlayerSymbol);
         linea.turno = new TurnoAzul();
     }
 
