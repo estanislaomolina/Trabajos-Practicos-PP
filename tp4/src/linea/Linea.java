@@ -1,9 +1,6 @@
 package linea;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Linea {
@@ -85,7 +82,7 @@ public class Linea {
             turno.playBlueAt(this, column-1);
         }
 
-    public void placeChip(int column, char playerSymbol) {
+    public void placeChip(int column, String playerSymbol) {
         if (column < 0 || column >= board.size()) {
             throw new RuntimeException(outOfBoundsErrorMessage);
         }
@@ -176,13 +173,13 @@ public class Linea {
                     .forEach(mode -> this.gameMode = mode);
         }
 
-        public ArrayList<Character> getRowContent(int row){
-            ArrayList<Character> boardContent = new ArrayList<>();
+        public ArrayList<String> getRowContent(int row){
+            ArrayList<String> boardContent = new ArrayList<>();
             for (int i = 0; i < board.size(); i++) {
                 if (board.get(i).size()-1 >= row && !board.get(i).isEmpty()) {
-                    boardContent.add((char) board.get(i).get(row));
+                    boardContent.add((String) board.get(i).get(row));
                 } else {
-                    boardContent.add(' ');
+                    boardContent.add(String.valueOf(' '));
                 }
             }
             return boardContent;
